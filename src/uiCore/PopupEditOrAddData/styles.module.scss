@@ -106,5 +106,6 @@
 
 .image__demo {
   height: auto;
-  width: auto;
+  width: 100%;
+  object-fit: contain;
 }

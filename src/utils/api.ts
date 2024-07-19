@@ -58,3 +58,42 @@ export const updateDestination = (id: number, data: any) => {
   const axios = new BaseAxios();
   return axios.patch(`destination/${id}`, data);
 };
+
+export const getAllDetailLocation = (page: number, limit: number, idDestination: number) => {
+  const axios = new BaseAxios();
+  let url = 'detail-location?';
+  if (page) url += 'page=' + page;
+  if (limit) url += '&limit=' + limit;
+  if (idDestination) url += '&destinationId=' + idDestination;
+  return axios.get(url);
+};
+
+export const createDetailLocation = (data: any) => {
+  const axios = new BaseAxios();
+  return axios.post('detail-location', data);
+};
+
+export const updateDetailLocation = (id: number, data: any) => {
+  const axios = new BaseAxios();
+  return axios.patch(`detail-location/${id}`, data);
+};
+
+export const getAllCruise = (page: number, limit: number, destinationId: number, detailLocationId: number) => {
+  const axios = new BaseAxios();
+  let url = 'cruise?';
+  if (page) url += 'page=' + page;
+  if (limit) url += '&limit=' + limit;
+  if (destinationId) url += '&destinationId=' + destinationId;
+  if (detailLocationId) url += '&detailLocationId=' + detailLocationId;
+  return axios.get(url);
+};
+
+export const createCruise = (data: any) => {
+  const axios = new BaseAxios();
+  return axios.post('cruise', data);
+};
+
+export const updateCruise = (id: number, data: any) => {
+  const axios = new BaseAxios();
+  return axios.patch(`cruise/${id}`, data);
+};

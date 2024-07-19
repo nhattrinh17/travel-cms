@@ -5,6 +5,8 @@ import userReduce from './app/users.slice';
 import specialOfferReduce from './app/specialOffer.slice';
 import accompaniedServiceReduce from './app/accompaniedService.slice';
 import destinationReduce from './app/destination.slice';
+import detailLocationReduce from './app/detailLocation.slice';
+import cruiseReduce from './app/cruise.slice';
 
 export const makeStore = () => {
   return configureStore({
@@ -15,6 +17,8 @@ export const makeStore = () => {
       specialOffer: specialOfferReduce,
       accompaniedService: accompaniedServiceReduce,
       destination: destinationReduce,
+      detailLocation: detailLocationReduce,
+      cruise: cruiseReduce,
     },
   });
 };

@@ -8,13 +8,14 @@ import { faPlus, faXmark } from '@fortawesome/free-solid-svg-icons';
 import Table from '@/uiCore/Table';
 import { ItemAddOrUpdateDto, PopupEditOrAddV1 } from '@/uiCore';
 import { handleCreateDestination, handleUpdateDestination, useDestination } from '@/utils/handleDestination';
-import { upLoadOneFile } from '@/share/upLoadFile';
+
 import { useAppDispatch } from '@/lib';
 import { resetDataDestination } from '@/lib/redux/app/destination.slice';
+import { upLoadFiles } from '@/share/upLoadFile';
 
 const cx = classNames.bind(styles);
 
-export function DetailLocationComponent({ onCancel }: { onCancel: () => void }): JSX.Element {
+export function DestinationComponent({ onCancel }: { onCancel: () => void }): JSX.Element {
   const [isCreate, setIsCreate] = useState(false);
   const { data } = useDestination();
   const [idEdit, setIdEdit] = useState<number>();
@@ -111,7 +112,7 @@ export function DetailLocationComponent({ onCancel }: { onCancel: () => void }):
             onSubmit={handleUpdateDestination}
             position={'fixed'}
             maxWidth={'60%'}
-            handleUploadOneFile={(file) => upLoadOneFile('image', file)}
+            handleUpLoadFiles={(file) => upLoadFiles('image', file)}
           />
         )}
       </div>

@@ -34,7 +34,7 @@ export interface DataEditDto {
   textWarning?: string;
   onSubmit?: (id: number, data: any, dispatch: any) => void;
   onSubmitCreate?: (data: any, dispatch: any) => void;
-  handleUploadOneFile?: (file: File) => Promise<string[]>;
+  handleUpLoadFiles?: (file: FileList) => Promise<string[]>;
   position?: any;
 }
 
@@ -48,7 +48,7 @@ export function PopupEditOrAddV1({
   onSubmit,
   title,
   textWarning,
-  handleUploadOneFile,
+  handleUpLoadFiles,
   onSubmitCreate,
   position = 'absolute',
 }: DataEditDto) {
@@ -93,7 +93,7 @@ export function PopupEditOrAddV1({
 
   // Editor
   const handleUploadImg = async (blobInfo: any, progress: any): Promise<string> => {
-    const uploadImg: string[] = handleUploadOneFile ? await handleUploadOneFile(blobInfo.blob()) : [];
+    const uploadImg: string[] = handleUpLoadFiles ? await handleUpLoadFiles(blobInfo.blob()) : [];
     return uploadImg[0];
   };
 
@@ -158,16 +158,29 @@ export function PopupEditOrAddV1({
                     required={col.required}
                     multiple
                     onChange={async (e) => {
-                      if (e.target.files && handleUploadOneFile) {
-                        const urlImage = await handleUploadOneFile(e.target.files[0]);
+                      if (e.target.files && handleUpLoadFiles) {
+                        const urlImage = await handleUpLoadFiles(e.target.files);
                         if (urlImage.length) {
-                          handleChangeFile(urlImage[0], col);
+                          handleChangeFile(urlImage.join('*_*'), col);
                         }
                       }
                     }}
                   />
-                  <div className="mt-4">
-                    <Image alt="Image demo" src={String(col.value) || '/no-image.jpg'} width={80} height={80} className={cx('image__demo', 'rounded-2xl')} />
+                  <div className="mt-4 grid grid-cols-3 gap-3">
+                    {col.value
+                      .toString()
+                      .split('*_*')
+                      .map((img, index) => (
+                        <Image
+                          //
+                          key={index}
+                          alt="Image demo"
+                          src={String(img) || '/no-image.jpg'}
+                          width={80}
+                          height={80}
+                          className={cx('image__demo', 'rounded-2xl')}
+                        />
+                      ))}
                   </div>
                 </div>
               ) : col.type == 'editor' ? (
