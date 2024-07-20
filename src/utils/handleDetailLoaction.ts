@@ -5,7 +5,6 @@ import moment from 'moment';
 import { resetDataDetailLocation, setDataDetailLocations } from '@/lib/redux/app/detailLocation.slice';
 import { createDetailLocation, getAllDetailLocation, updateDetailLocation } from './api';
 export const useDetailLocation = (idDestination: number, limitCustom?: number) => {
-  console.log('🚀 ~ useDetailLocation ~ idDestination:', idDestination);
   const { detailLocations, refreshData, page, limit } = useAppSelector((state) => state.detailLocation);
   const destinationRef = useRef(idDestination);
   const dispatch = useAppDispatch();

@@ -53,16 +53,24 @@ export function PopupEditOrAddV1({
   position = 'absolute',
 }: DataEditDto) {
   const [dataState, setDataState] = useState(data);
+  console.log('🚀 ~ dataState:', dataState);
   const isUnableBtn = dataState.some((item) => item.canUpdate);
   const editorRef = useRef<any>();
 
   const dispatch = useAppDispatch();
 
-  const handleOnChangeInputOrSelect = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>, col: ItemAddOrUpdateDto) => {
+  const handleOnChangeInputOrSelect = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>, col: ItemAddOrUpdateDto) => {
     //   const element = e.target as HTMLOptionElement;
     setDataState((pre) => {
       const dataNew = pre.map((item) => {
         if (item.name === col.name) {
+          if (col.type == 'checkbox') {
+            const elementCheckbox: any = e.target;
+            return {
+              ...item,
+              value: elementCheckbox.checked,
+            };
+          }
           return {
             ...item,
             value: e.target.value,
@@ -176,8 +184,8 @@ export function PopupEditOrAddV1({
                           key={index}
                           alt="Image demo"
                           src={String(img) || '/no-image.jpg'}
-                          width={80}
-                          height={80}
+                          width={350}
+                          height={250}
                           className={cx('image__demo', 'rounded-2xl')}
                         />
                       ))}
@@ -211,6 +219,18 @@ export function PopupEditOrAddV1({
                   }}
                   initialValue={String(col.value)}
                 />
+              ) : col.type == 'textarea' ? (
+                <textarea
+                  value={col.value ?? ''}
+                  name={col.name}
+                  required={col.required}
+                  readOnly={col.readOnly}
+                  placeholder={col.placeholder}
+                  className={cx('group__data--input', 'min-h-[140px]', { 'group__data--input-readOnly': col.readOnly })}
+                  onChange={(e) => {
+                    handleOnChangeInputOrSelect(e, col);
+                  }}
+                />
               ) : (
                 <input
                   value={col.value ?? ''}
@@ -218,6 +238,7 @@ export function PopupEditOrAddV1({
                   type={col.type}
                   required={col.required}
                   readOnly={col.readOnly}
+                  defaultChecked={Boolean(col.value)}
                   placeholder={col.placeholder}
                   className={cx('group__data--input', { 'group__data--input-readOnly': col.readOnly })}
                   onChange={(e) => {

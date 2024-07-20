@@ -202,7 +202,7 @@ function Table(props: {
             </tbody>
           </table>
         ) : (
-          <h3 className="text-center text-xl font-medium">Không có dữ liệu phù hợp !!!</h3>
+          <h3 className="text-center text-xl font-medium">No data matching !!!</h3>
         )}
       </div>
     </div>

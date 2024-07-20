@@ -10,6 +10,7 @@ import { useEffect, useState } from 'react';
 import { useAppSelector } from '@/lib';
 
 import { usePathname } from 'next/navigation';
+import { faMap } from '@fortawesome/free-regular-svg-icons';
 
 const cx = classNames.bind(styles);
 
@@ -32,7 +33,6 @@ export function SideBars(): JSX.Element {
     {
       title: 'Cruise',
       icon: faShip,
-      // link: '/admin/games',
       subMenu: [
         {
           title: 'List',
@@ -41,6 +41,20 @@ export function SideBars(): JSX.Element {
         {
           title: 'Booking',
           link: '/admin/cruise/booking',
+        },
+      ],
+    },
+    {
+      title: 'Tour',
+      icon: faMap,
+      subMenu: [
+        {
+          title: 'List',
+          link: '/admin/tour',
+        },
+        {
+          title: 'Booking',
+          link: '/admin/tour/booking',
         },
       ],
     },

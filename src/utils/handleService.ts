@@ -1,10 +1,12 @@
 import { useAppDispatch, useAppSelector } from '@/lib';
 import { setLoadingApp } from '@/lib/redux/system/settingSys';
 import { useEffect } from 'react';
-import { createAccompaniedService, createSpecialOffer, getAllAccompaniedService, getAllSpecialOffer, updateAccompaniedService, updateSpecialOffer } from './api';
+import { createAccompaniedService, createSpecialOffer, getAllAccompaniedService, getAllSpecialOffer, updateAccompaniedService, updateAccompaniedServiceCruise, updateAccompaniedServiceTour, updateSpecialOffer, updateSpecialOfferCruise, updateSpecialOfferTour } from './api';
 import moment from 'moment';
 import { resetDataSpecialOffer, setDataSpecialOffers } from '@/lib/redux/app/specialOffer.slice';
 import { resetDataAccompaniedService, setDataAccompaniedServices } from '@/lib/redux/app/accompaniedService.slice';
+import { refreshDataCruise } from '@/lib/redux/app/cruise.slice';
+import { refreshDataTour } from '@/lib/redux/app/tour.slice';
 
 export const useSpecialOffer = (limitCustom?: number) => {
   const { specialOffers, refreshData, page, limit, total } = useAppSelector((state) => state.specialOffer);
@@ -111,6 +113,56 @@ export const handleUpdateAccompaniedService = async (id: number, data: any, disp
   const req = await updateAccompaniedService(id, data);
   if (req?.data) {
     dispatch(resetDataAccompaniedService());
+  } else {
+    return false;
+  }
+};
+
+export const handleUpdateAccompaniedServiceCruise = async (cruiseId: number, accompaniedServiceIds: number[], dispatch: any) => {
+  const req = await updateAccompaniedServiceCruise({
+    cruiseId,
+    accompaniedServiceIds,
+  });
+  if (req?.data) {
+    dispatch(refreshDataCruise());
+  } else {
+    return false;
+  }
+};
+
+export const handleUpdateSpecialOfferCruise = async (cruiseId: number, specialOfferIds: number[], dispatch: any) => {
+  const req = await updateSpecialOfferCruise({
+    cruiseId,
+    specialOfferIds,
+  });
+
+  if (req?.data) {
+    dispatch(refreshDataCruise());
+  } else {
+    return false;
+  }
+};
+
+export const handleUpdateSpecialOfferTour = async (tourId: number, specialOfferIds: number[], dispatch: any) => {
+  const req = await updateSpecialOfferTour({
+    tourId,
+    specialOfferIds,
+  });
+
+  if (req?.data) {
+    dispatch(refreshDataTour());
+  } else {
+    return false;
+  }
+};
+
+export const handleUpdateAccompaniedServiceTour = async (tourId: number, accompaniedServiceIds: number[], dispatch: any) => {
+  const req = await updateAccompaniedServiceTour({
+    tourId,
+    accompaniedServiceIds,
+  });
+  if (req?.data) {
+    dispatch(refreshDataTour());
   } else {
     return false;
   }

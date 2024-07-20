@@ -1,22 +1,22 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-interface cruiseSlice {
-  cruises: {
+interface TourSliceDto {
+  tours: {
     id: number;
+    packetTourId: string;
+    type: string;
     name: string;
     contentBrief: string;
-    detail: string;
+    detail: number;
     images: string;
+    price: number;
     discount: number;
     isFlashSale: boolean;
     travelerLoves: string;
-    price: number;
-    totalRoom: number;
-    timeLaunched: number;
-    styleCruise: string;
     createdAt: string;
-    accompaniedServices: { id: number }[];
     specialOffers: { id: number }[];
+    accompaniedServices: { id: number }[];
+    itineraries: { id: number }[];
   }[];
   page: number;
   limit: number;
@@ -24,40 +24,46 @@ interface cruiseSlice {
   refreshData: boolean;
 }
 
-const cruiseSlice = createSlice({
-  name: 'cruise',
+const tourSlice = createSlice({
+  name: 'tour',
   initialState: {
-    cruises: [],
+    tours: [],
     limit: 10,
     page: 1,
     total: 0,
     refreshData: true,
-  } as cruiseSlice,
+  } as TourSliceDto,
   reducers: {
-    setDataCruises: (state, action) => {
-      state.cruises = action.payload?.data;
+    setDataTours: (state, action) => {
+      state.tours = action.payload?.data;
       state.total = action.payload?.total;
       state.page = action.payload.page;
       state.refreshData = false;
     },
-    setLimitOrPageCruise: (state, action: { payload: { limit?: number; page?: number } }) => {
+    setLimitOrPageTour: (state, action: { payload: { limit?: number; page?: number } }) => {
       state.limit = action.payload.limit ? action.payload.limit : state.limit;
       state.page = action.payload.page ? action.payload.page : state.page;
     },
-    resetDataCruise: (state) => {
-      state.cruises = [];
+    resetDataTour: (state) => {
+      state.tours = [];
       state.page = 1;
       state.limit = 10;
       state.total = 0;
       state.refreshData = true;
     },
 
-    refreshDataCruise: (state) => {
+    refreshDataTour: (state) => {
       state.refreshData = true;
     },
   },
 });
 
-export const { refreshDataCruise, resetDataCruise, setDataCruises, setLimitOrPageCruise } = cruiseSlice.actions;
+export const {
+  //
+  refreshDataTour,
+  resetDataTour,
+  setDataTours,
+  setLimitOrPageTour,
+} = tourSlice.actions;
 
-export default cruiseSlice.reducer;
+export default tourSlice.reducer;

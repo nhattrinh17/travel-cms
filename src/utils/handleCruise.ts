@@ -1,18 +1,19 @@
 import { useAppDispatch, useAppSelector } from '@/lib';
 import { setLoadingApp } from '@/lib/redux/system/settingSys';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import moment from 'moment';
-import { createCruise, getAllCruise, updateCruise } from './api';
+import { createCruise, getAllCruise, getAllItinerariesCruise, getAllRoomCruise, updateCruise } from './api';
 import { resetDataCruise, setDataCruises } from '@/lib/redux/app/cruise.slice';
+
 export const useCruise = (idDestination: number, idDetailLocation: number) => {
-  const { cruises, refreshData, page, limit } = useAppSelector((state) => state.cruise);
+  const { cruises, refreshData, page, limit, total } = useAppSelector((state) => state.cruise);
   const destinationRef = useRef(idDestination);
   const detailLocationRef = useRef(idDetailLocation);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     async function fetchData() {
-      if ((refreshData || idDestination !== destinationRef.current || idDetailLocation !== detailLocationRef.current) && idDestination && idDetailLocation) {
+      if (refreshData || idDestination !== destinationRef.current || idDetailLocation !== detailLocationRef.current) {
         dispatch(setLoadingApp({ loading: true }));
         destinationRef.current = idDestination;
         detailLocationRef.current = idDetailLocation;
@@ -33,9 +34,15 @@ export const useCruise = (idDestination: number, idDetailLocation: number) => {
       cruises.map((i) => {
         return {
           ...i,
+          isFlashSale: i.isFlashSale ? 'Run flash sales' : 'Normal',
           createdAt: moment(i.createdAt).format('YYYY-MM-DD HH:mm:ss'),
         };
       }) || [],
+    pagination: {
+      total: total,
+      limit: limit,
+      page: page,
+    },
   };
 };
 
@@ -55,4 +62,77 @@ export const handleUpdateCruise = async (id: number, data: any, dispatch: any) =
   } else {
     return false;
   }
+};
+
+export const useRoomCruise = (idCruise: number, refreshData: boolean) => {
+  const [data, setData] = useState<
+    {
+      id: number;
+      name: string;
+      price: number;
+      totalRooms: number;
+      typeBed: number;
+      isViewOcean: string;
+      acreage: number;
+      location: string;
+      images: string;
+      specialService: string;
+      content: string;
+      maxPerson: number;
+      amenities: number;
+    }[]
+  >([]);
+
+  useEffect(() => {
+    async function fetchData() {
+      if (idCruise) {
+        const res = await getAllRoomCruise(idCruise);
+        if (res?.data) {
+          const { data, pagination } = res?.data;
+          setData(data);
+        }
+      }
+    }
+
+    fetchData();
+  }, [idCruise, refreshData]);
+
+  return data.map((i) => {
+    return {
+      ...i,
+      isViewOcean: i.isViewOcean ? 'Yes' : 'No',
+    };
+  });
+};
+
+export const useItinerariesCruise = (idCruise: number, refreshData: boolean) => {
+  const [data, setData] = useState<
+    {
+      id: number;
+      day: string;
+      name: string;
+      description: number;
+      content: number;
+    }[]
+  >([]);
+
+  useEffect(() => {
+    async function fetchData() {
+      if (idCruise) {
+        const res = await getAllItinerariesCruise(idCruise);
+        if (res?.data) {
+          const { data, pagination } = res?.data;
+          setData(data);
+        }
+      }
+    }
+
+    fetchData();
+  }, [idCruise, refreshData]);
+
+  return data.map((i) => {
+    return {
+      ...i,
+    };
+  });
 };

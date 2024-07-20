@@ -7,17 +7,16 @@ import { useEffect, useState } from 'react';
 import { faPlus, faXmark } from '@fortawesome/free-solid-svg-icons';
 import Table from '@/uiCore/Table';
 import { ItemAddOrUpdateDto, PopupEditOrAddV1 } from '@/uiCore';
-import { handleCreateDestination, handleUpdateDestination, useDestination } from '@/utils/handleDestination';
-
 import { useAppDispatch } from '@/lib';
-import { resetDataDestination } from '@/lib/redux/app/destination.slice';
 import { upLoadFiles } from '@/share/upLoadFile';
+import { handleCreatePacketTour, handleUpdatePacketTour, usePacketTour } from '@/utils/handlePacketTour';
+import { resetDataPacketTour } from '@/lib/redux/app/packetTour.slice';
 
 const cx = classNames.bind(styles);
 
-export function DestinationComponent({ onCancel }: { onCancel: () => void }): JSX.Element {
+export function PacketTourComponent({ onCancel }: { onCancel: () => void }): JSX.Element {
   const [isCreate, setIsCreate] = useState(false);
-  const { data } = useDestination();
+  const { data } = usePacketTour();
   const [idEdit, setIdEdit] = useState<number>();
   const dispatch = useAppDispatch();
 
@@ -62,7 +61,7 @@ export function DestinationComponent({ onCancel }: { onCancel: () => void }): JS
 
   useEffect(() => {
     return () => {
-      dispatch(resetDataDestination());
+      dispatch(resetDataPacketTour());
     };
   }, []);
 
@@ -70,12 +69,12 @@ export function DestinationComponent({ onCancel }: { onCancel: () => void }): JS
     <div className={cx('wrapper')}>
       <div>
         <div className="flex justify-between">
-          <h2 className="font-medium">Manage Destination</h2>
+          <h2 className="font-medium">Manage packet tour</h2>
           <FontAwesomeIcon className="text-xl cursor-pointer" icon={faXmark} onClick={onCancel} />
         </div>
-        <p className="text-sm underline">Click update to see destination description</p>
+        <p className="text-sm underline">Click update to see packet tour description</p>
         <div className="mt-2 px-3 py-[6px] border-[1px] rounded-2xl w-fit cursor-pointer hover:bg-[#a27cff63] transition-all" onClick={() => setIsCreate(true)}>
-          <span className="mr-1 text-base">Add Destination</span>
+          <span className="mr-1 text-base">Add packet tour</span>
           <FontAwesomeIcon className="text-xs" icon={faPlus} onClick={() => {}} />
         </div>
 
@@ -97,15 +96,15 @@ export function DestinationComponent({ onCancel }: { onCancel: () => void }): JS
 
         {(idEdit || isCreate) && (
           <PopupEditOrAddV1
-            title={isCreate ? 'Add Destination' : 'Update Destination'}
+            title={isCreate ? 'Add packet tour' : 'Update packet tour'}
             data={dataDto}
             onCancel={() => {
               setIdEdit(0);
               setIsCreate(false);
             }}
             id={idEdit}
-            onSubmitCreate={handleCreateDestination}
-            onSubmit={handleUpdateDestination}
+            onSubmitCreate={handleCreatePacketTour}
+            onSubmit={handleUpdatePacketTour}
             position={'fixed'}
             maxWidth={'60%'}
             handleUpLoadFiles={(file) => upLoadFiles('image', file)}
