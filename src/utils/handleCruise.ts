@@ -78,7 +78,8 @@ export const useRoomCruise = (idCruise: number, refreshData: boolean) => {
       images: string;
       specialService: string;
       content: string;
-      maxPerson: number;
+      maxAdult: number;
+      maxChildren: number;
       amenities: number;
     }[]
   >([]);
