@@ -50,7 +50,7 @@ export const TypeRequireClass = {
   lecturers: 3,
 };
 
-export const GenderStudent = {
-  Male: 0,
-  Female: 1,
+export const TypeOtherServiceBooking = {
+  other: 0,
+  transfer: 1,
 };

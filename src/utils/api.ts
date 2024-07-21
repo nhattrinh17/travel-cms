@@ -41,6 +41,24 @@ export const updateAccompaniedService = (id: number, data: any) => {
   return axios.patch(`accompanied-service/${id}`, data);
 };
 
+export const getAllOtherServiceBooking = (page: number, limit: number) => {
+  const axios = new BaseAxios();
+  let url = 'service-booking?';
+  if (page) url += 'page=' + page;
+  if (limit) url += '&limit=' + limit;
+  return axios.get(url);
+};
+
+export const createOtherServiceBooking = (data: any) => {
+  const axios = new BaseAxios();
+  return axios.post('service-booking', data);
+};
+
+export const updateOtherServiceBooking = (id: number, data: any) => {
+  const axios = new BaseAxios();
+  return axios.patch(`service-booking/${id}`, data);
+};
+
 export const getAllDestination = (page: number, limit: number) => {
   const axios = new BaseAxios();
   let url = 'destination?';

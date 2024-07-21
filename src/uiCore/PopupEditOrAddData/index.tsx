@@ -53,7 +53,6 @@ export function PopupEditOrAddV1({
   position = 'absolute',
 }: DataEditDto) {
   const [dataState, setDataState] = useState(data);
-  console.log('🚀 ~ dataState:', dataState);
   const isUnableBtn = dataState.some((item) => item.canUpdate);
   const editorRef = useRef<any>();
 
