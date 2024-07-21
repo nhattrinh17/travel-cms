@@ -31,20 +31,25 @@ export function UpdateSpecialOfferCruiseAndTour({
         </div>
         <ul className="py-3 overflow-auto max-h-[200px]">
           {data.map((SpecialOffer, index) => (
-            <li
-              key={index}
-              onClick={() => {
-                setSpecialOfferSelect((pre) => {
-                  if (pre.includes(SpecialOffer.id)) {
-                    return pre.filter((i) => i != SpecialOffer.id);
-                  } else {
-                    return [...pre, SpecialOffer.id];
-                  }
-                });
-              }}
-              className="flex py-2 cursor-pointer">
-              <input defaultChecked={specialOfferSelect.includes(SpecialOffer.id)} type="checkbox" className="mr-5" />
-              <p className="flex-1">{SpecialOffer.name}</p>
+            <li key={index} className="flex py-2 cursor-pointer">
+              <input
+                onChange={() => {
+                  setSpecialOfferSelect((pre) => {
+                    if (pre.includes(SpecialOffer.id)) {
+                      return pre.filter((i) => i != SpecialOffer.id);
+                    } else {
+                      return [...pre, SpecialOffer.id];
+                    }
+                  });
+                }}
+                id={`special-offer-${index}`}
+                defaultChecked={specialOfferSelect.includes(SpecialOffer.id)}
+                type="checkbox"
+                className="mr-5"
+              />
+              <label htmlFor={`special-offer-${index}`} className="flex-1">
+                {SpecialOffer.name}
+              </label>
             </li>
           ))}
         </ul>

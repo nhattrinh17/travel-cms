@@ -88,6 +88,14 @@ export function ServiceSection(): JSX.Element {
       ],
     },
     {
+      label: 'Options for transfer(Separated by "*_*")',
+      name: 'options',
+      readOnly: false,
+      type: 'text',
+      value: serviceBookingById?.options || '',
+      canUpdate: true,
+    },
+    {
       label: 'Description (show when booking)',
       name: 'description',
       readOnly: false,
@@ -165,7 +173,7 @@ export function ServiceSection(): JSX.Element {
             ) : (
               <Table
                 textColor="black"
-                columnNotShow={['description']}
+                columnNotShow={['description', 'options', 'type', 'createdAt']}
                 data={dataOtherServiceBooking}
                 columnDelete={false}
                 columnEdit

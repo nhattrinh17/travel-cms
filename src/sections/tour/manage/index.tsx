@@ -260,6 +260,7 @@ export function TourManageSection(): JSX.Element {
             onCancel={() => {
               setShowService(false);
             }}
+            otherServiceInit={[]}
             serviceSelectInit={data.find((i) => i.id == idSelect)?.accompaniedServices.map((i) => i.id) || []}
           />
         ) : (

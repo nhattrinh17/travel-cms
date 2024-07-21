@@ -1,7 +1,7 @@
 import { useAppDispatch, useAppSelector } from '@/lib';
 import { setLoadingApp } from '@/lib/redux/system/settingSys';
 import { useEffect } from 'react';
-import { createAccompaniedService, createOtherServiceBooking, createSpecialOffer, getAllAccompaniedService, getAllOtherServiceBooking, getAllSpecialOffer, updateAccompaniedService, updateAccompaniedServiceCruise, updateAccompaniedServiceTour, updateOtherServiceBooking, updateSpecialOffer, updateSpecialOfferCruise, updateSpecialOfferTour } from './api';
+import { createAccompaniedService, createOtherServiceBooking, createSpecialOffer, getAllAccompaniedService, getAllOtherServiceBooking, getAllSpecialOffer, updateAccompaniedService, updateAccompaniedServiceCruise, updateAccompaniedServiceTour, updateBookingServiceCruise, updateOtherServiceBooking, updateSpecialOffer, updateSpecialOfferCruise, updateSpecialOfferTour } from './api';
 import moment from 'moment';
 import { resetDataSpecialOffer, setDataSpecialOffers } from '@/lib/redux/app/specialOffer.slice';
 import { resetDataAccompaniedService, setDataAccompaniedServices } from '@/lib/redux/app/accompaniedService.slice';
@@ -148,8 +148,7 @@ export const useOtherServiceBooking = (limitCustom?: number) => {
           ...i,
           content: i.description,
           description: i.description,
-          type: i.type == TypeOtherServiceBooking.other ? 'Other Service' : 'Transfer service',
-          createdAt: moment(i.createdAt).format('YYYY-MM-DD HH:mm:ss'),
+          service: i.type == TypeOtherServiceBooking.other ? 'Other Service' : 'Transfer service',
         };
       }) || [],
     pagination: {
@@ -182,6 +181,18 @@ export const handleUpdateAccompaniedServiceCruise = async (cruiseId: number, acc
   const req = await updateAccompaniedServiceCruise({
     cruiseId,
     accompaniedServiceIds,
+  });
+  if (req?.data) {
+    dispatch(refreshDataCruise());
+  } else {
+    return false;
+  }
+};
+
+export const handleUpdateBookingServiceCruise = async (cruiseId: number, otherServices: number[], dispatch: any) => {
+  const req = await updateBookingServiceCruise({
+    cruiseId,
+    otherServices,
   });
   if (req?.data) {
     dispatch(refreshDataCruise());

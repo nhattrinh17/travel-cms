@@ -159,6 +159,11 @@ export const updateAccompaniedServiceCruise = (data: any) => {
   return axios.post(`cruise/accompanied-service`, data);
 };
 
+export const updateBookingServiceCruise = (data: any) => {
+  const axios = new BaseAxios();
+  return axios.post(`cruise/booking-service`, data);
+};
+
 export const updateSpecialOfferCruise = (data: any) => {
   const axios = new BaseAxios();
   return axios.post(`cruise/special-offer`, data);

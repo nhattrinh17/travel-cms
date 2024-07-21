@@ -4,6 +4,8 @@ interface cruiseSlice {
   cruises: {
     id: number;
     name: string;
+    destinationId: number;
+    detailLocationId: number;
     contentBrief: string;
     detail: string;
     images: string;
@@ -17,6 +19,7 @@ interface cruiseSlice {
     createdAt: string;
     accompaniedServices: { id: number }[];
     specialOffers: { id: number }[];
+    otherServiceBookings: { id: number }[];
   }[];
   page: number;
   limit: number;
