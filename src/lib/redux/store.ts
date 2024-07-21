@@ -10,6 +10,7 @@ import cruiseReduce from './app/cruise.slice';
 import packetTourReduce from './app/packetTour.slice';
 import tourReduce from './app/tour.slice';
 import otherServiceBookingReduce from './app/otherServiceBooking.slice';
+import bookingCruiseReduce from './app/bookingCruise.slice';
 
 export const makeStore = () => {
   return configureStore({
@@ -25,6 +26,7 @@ export const makeStore = () => {
       packetTour: packetTourReduce,
       tour: tourReduce,
       otherServiceBooking: otherServiceBookingReduce,
+      bookingCruise: bookingCruiseReduce,
     },
   });
 };

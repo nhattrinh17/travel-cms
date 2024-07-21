@@ -208,3 +208,11 @@ export const addOrUpdateItinerariesTour = (data: any) => {
   const axios = new BaseAxios();
   return axios.post(`tour/itineraries`, data);
 };
+
+export const getAllBookingCruise = (page: number, limit: number) => {
+  const axios = new BaseAxios();
+  let url = 'cruise/booking?';
+  if (page) url += 'page=' + page;
+  if (limit) url += '&limit=' + limit;
+  return axios.get(url);
+};
