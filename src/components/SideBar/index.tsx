@@ -18,12 +18,12 @@ export function SideBars(): JSX.Element {
   const { name, email } = useAppSelector((state) => state.userCurrent);
 
   const dataNav = [
-    {
-      title: 'User',
-      icon: faUser,
-      link: '/admin/user',
-      subMenu: [],
-    },
+    // {
+    //   title: 'User',
+    //   icon: faUser,
+    //   link: '/admin/user',
+    //   subMenu: [],
+    // },
     {
       title: 'offer & service',
       icon: faGifts,
