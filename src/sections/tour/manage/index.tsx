@@ -10,7 +10,7 @@ import { ItemAddOrUpdateDto, PopupEditOrAddV1 } from '@/uiCore';
 import Table from '@/uiCore/Table';
 import { usePacketTour } from '@/utils/handlePacketTour';
 import { faUps } from '@fortawesome/free-brands-svg-icons';
-import { faBed, faGift, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faBed, faComment, faGift, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames/bind';
 import { useState } from 'react';
@@ -20,6 +20,7 @@ import { setLimitOrPageTour } from '@/lib/redux/app/tour.slice';
 import { useAppDispatch } from '@/lib';
 import { ItinerariesCruiseAndTour } from '@/components/Itineraries';
 import { faRectangleList } from '@fortawesome/free-regular-svg-icons';
+import { ReviewComponent } from '@/components/Review-Man';
 
 const cx = classNames.bind({});
 
@@ -40,6 +41,7 @@ export function TourManageSection(): JSX.Element {
   const [showService, setShowService] = useState(false);
   const [showSpecialOffer, setShowSpecialOffer] = useState(false);
   const [showItineraries, setShowItineraries] = useState(false);
+  const [showReview, setShowReview] = useState(false);
 
   const setPageTour = (page: number) => {
     dispatch(
@@ -222,6 +224,14 @@ export function TourManageSection(): JSX.Element {
                   setShowItineraries(true);
                 },
               },
+              {
+                name: 'Review',
+                icon: faComment,
+                handleClick(item) {
+                  setIdSelect(item.id);
+                  setShowReview(true);
+                },
+              },
             ]}
             handleEdit={(id) => {
               setIdEdit(id);
@@ -280,6 +290,7 @@ export function TourManageSection(): JSX.Element {
           <></>
         )}
         {showItineraries ? <ItinerariesCruiseAndTour isForTour idCruiseOrTour={idSelect} onCancel={() => setShowItineraries(false)} /> : <></>}
+        {showReview ? <ReviewComponent idTour={idSelect} idCruise={0} onCancel={() => setShowReview(false)} /> : <></>}
       </div>
     </main>
   );

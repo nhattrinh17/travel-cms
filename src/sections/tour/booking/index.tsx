@@ -2,50 +2,43 @@
 
 import { HeaderContent } from '@/components/HeaderContent';
 import { useAppDispatch } from '@/lib';
-import { setLimitOrPageBookingCruise } from '@/lib/redux/app/bookingCruise.slice';
+import { setLimitOrPageBookingTour } from '@/lib/redux/app/bookingTour.slice';
 import { ItemAddOrUpdateDto, PopupEditOrAddV1 } from '@/uiCore';
 import Pagination from '@/uiCore/Pagination';
 import Table from '@/uiCore/Table';
-import { contactCustomerCruise } from '@/utils/api';
-import { useBookingCruise } from '@/utils/handleBookingCruise';
+import { contactCustomerTour } from '@/utils/api';
+import { useBookingTour } from '@/utils/handleBookingTour';
 import { faCircleInfo, faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 import classNames from 'classnames/bind';
 import { useRef, useState } from 'react';
 
 const cx = classNames.bind({});
 
-export function BookingCruiseSection(): JSX.Element {
-  const { data, pagination } = useBookingCruise();
+export function BookingTourSection(): JSX.Element {
+  const { data, pagination } = useBookingTour();
   const idEdit = useRef<number>();
   const [openContact, setOpenContact] = useState<boolean>();
   const [openDetail, setOpenDetail] = useState<boolean>();
   const bookingById = data.find((i) => i.id == idEdit.current);
   const dispatch = useAppDispatch();
 
-  const setPageBookingCruise = (page: number) => {
-    dispatch(setLimitOrPageBookingCruise({ page: page }));
+  const setPageBookingTour = (page: number) => {
+    dispatch(setLimitOrPageBookingTour({ page: page }));
   };
 
   const dataDto: ItemAddOrUpdateDto[] = [
     {
-      label: 'Name cruise',
+      label: 'Name Tour',
       name: 'nameCuise',
       readOnly: true,
       type: 'text',
-      value: bookingById?.nameCruise || '',
+      value: bookingById?.nameTour || '',
       canUpdate: false,
     },
+
     {
-      label: 'Type Itineraries',
-      name: 'typeItineraries',
-      readOnly: true,
-      type: 'text',
-      value: bookingById?.typeItineraries || '',
-      canUpdate: false,
-    },
-    {
-      label: 'Type Itineraries',
-      name: 'typeItineraries',
+      label: 'Detail',
+      name: 'detail',
       readOnly: true,
       type: 'editor',
       value: bookingById?.detail || '',
@@ -55,11 +48,11 @@ export function BookingCruiseSection(): JSX.Element {
 
   const dataSendMail: ItemAddOrUpdateDto[] = [
     {
-      label: 'Name cruise',
-      name: 'nameCruise',
+      label: 'Name Tour',
+      name: 'nameTour',
       readOnly: true,
       type: 'text',
-      value: bookingById?.nameCruise || '',
+      value: bookingById?.nameTour || '',
       canUpdate: false,
     },
     {
@@ -90,13 +83,13 @@ export function BookingCruiseSection(): JSX.Element {
 
   return (
     <main className="relative min-h-full">
-      <HeaderContent path="cruise/booking" title="Manage booking Cruise" />
-      {/* <h2 className="font-medium text-base">Manage Config Cruise</h2> */}
+      <HeaderContent path="Tour/booking" title="Manage booking Tour" />
+      {/* <h2 className="font-medium text-base">Manage Config Tour</h2> */}
       <div className="p-3 ">
         <div className={cx('min-h-full flex-1')}>
           <Table
             //
-            columnNotShow={['slug', 'detail', 'cruise', 'createdAt', 'totalChildren', 'totalAdult']}
+            columnNotShow={['slug', 'detail', 'Tour', 'createdAt', 'totalChildren', 'totalAdult']}
             textColor="black"
             data={data}
             columnDelete={false}
@@ -121,7 +114,7 @@ export function BookingCruiseSection(): JSX.Element {
             ]}
             handleEdit={(id) => {}}
           />
-          <Pagination count={pagination.total} limit={pagination.limit} page={pagination.page} setPage={setPageBookingCruise} />
+          <Pagination count={pagination.total} limit={pagination.limit} page={pagination.page} setPage={setPageBookingTour} />
         </div>
         {openDetail && (
           <PopupEditOrAddV1
@@ -143,7 +136,7 @@ export function BookingCruiseSection(): JSX.Element {
               setOpenContact(false);
             }}
             onSubmitCreate={async (data, dispatch) => {
-              const res = await contactCustomerCruise(data);
+              const res = await contactCustomerTour(data);
               if (res) {
                 setOpenContact(false);
               }

@@ -2,6 +2,7 @@
 
 import { HeaderContent } from '@/components/HeaderContent';
 import { ItinerariesCruiseAndTour } from '@/components/Itineraries';
+import { ReviewComponent } from '@/components/Review-Man';
 import { RoomCruise } from '@/components/RoomCruise';
 import { UpdateSpecialOfferCruiseAndTour } from '@/components/SpecialOffer';
 import { UpdateServiceCruiseAndTour } from '@/components/UpdateService';
@@ -18,7 +19,7 @@ import { useDestination } from '@/utils/handleDestination';
 import { useDetailLocation } from '@/utils/handleDetailLoaction';
 import { faUps } from '@fortawesome/free-brands-svg-icons';
 import { faRectangleList } from '@fortawesome/free-regular-svg-icons';
-import { faBed, faGift, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faBed, faComment, faGift, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames/bind';
 import { useState } from 'react';
@@ -44,6 +45,7 @@ export function CruiseManageSection(): JSX.Element {
   const [showSpecialOffer, setShowSpecialOffer] = useState(false);
   const [showTypeRoom, setShowTypeRoom] = useState(false);
   const [showItineraries, setShowItineraries] = useState(false);
+  const [showReview, setShowReview] = useState(false);
 
   const setPageTour = (page: number) => {
     dispatch(
@@ -241,6 +243,14 @@ export function CruiseManageSection(): JSX.Element {
                   setShowTypeRoom(true);
                 },
               },
+              {
+                name: 'Review',
+                icon: faComment,
+                handleClick(item) {
+                  setIdSelect(item.id);
+                  setShowReview(true);
+                },
+              },
             ]}
             handleEdit={(id) => {
               setIdEdit(id);
@@ -297,6 +307,7 @@ export function CruiseManageSection(): JSX.Element {
 
         {showTypeRoom ? <RoomCruise idCruise={idSelect} onCancel={() => setShowTypeRoom(false)} /> : <></>}
         {showItineraries ? <ItinerariesCruiseAndTour idCruiseOrTour={idSelect} onCancel={() => setShowItineraries(false)} /> : <></>}
+        {showReview ? <ReviewComponent idCruise={idSelect} idTour={0} onCancel={() => setShowReview(false)} /> : <></>}
       </div>
     </main>
   );

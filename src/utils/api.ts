@@ -216,3 +216,41 @@ export const getAllBookingCruise = (page: number, limit: number) => {
   if (limit) url += '&limit=' + limit;
   return axios.get(url);
 };
+
+export const contactCustomerCruise = (data: any) => {
+  const axios = new BaseAxios();
+  return axios.post(`cruise/contact`, data);
+};
+
+export const getAllBookingTour = (page: number, limit: number) => {
+  const axios = new BaseAxios();
+  let url = 'tour/booking?';
+  if (page) url += 'page=' + page;
+  if (limit) url += '&limit=' + limit;
+  return axios.get(url);
+};
+
+export const contactCustomerTour = (data: any) => {
+  const axios = new BaseAxios();
+  return axios.post(`tour/contact`, data);
+};
+
+export const getAllReview = (page: number, limit: number, cruiseId: number, tourId: number) => {
+  const axios = new BaseAxios();
+  let url = 'review?';
+  if (page) url += 'page=' + page;
+  if (limit) url += '&limit=' + limit;
+  if (cruiseId) url += '&cruiseId=' + cruiseId;
+  if (tourId) url += '&tourId=' + tourId;
+  return axios.get(url);
+};
+
+export const createReview = (data: any) => {
+  const axios = new BaseAxios();
+  return axios.post('review', data);
+};
+
+export const updateReview = (id: number, data: any) => {
+  const axios = new BaseAxios();
+  return axios.patch(`review/${id}`, data);
+};

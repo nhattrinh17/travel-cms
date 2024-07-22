@@ -37,3 +37,11 @@ body {
     text-wrap: balance;
   }
 }
+
+
+/* overwrite tiny cloud */
+.tox .tox-notification--warn,
+.tox .tox-notification--warning,
+.tox .tox-notification--warning {
+  display: none !important;
+}
