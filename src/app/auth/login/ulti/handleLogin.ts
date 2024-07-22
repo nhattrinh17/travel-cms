@@ -12,7 +12,7 @@ export const handleLogin = async (userName: string, password: string, isRemember
     const userInfo = await getUserInfo();
     if (userInfo) {
       dispatch(setDataUserLogin(userInfo?.data));
-      return router.push('/admin/user');
+      return router.push('/admin/cruise');
     }
   }
   return true;
