@@ -313,8 +313,6 @@ export function CruiseManageSection(): JSX.Element {
             }}
             id={idEdit}
             onSubmitCreate={(data, dispatch) => {
-              data.destinationId = idDestination;
-              data.detailLocationId = idDetailLocation;
               handleCreateCruise(data, dispatch);
             }}
             onSubmit={handleUpdateCruise}
