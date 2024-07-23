@@ -6,8 +6,8 @@ import StoreProvider from './StoreProvider';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'Gia sư số 1 Việt Nam',
-  description: 'Gia sư',
+  title: 'Global Travel',
+  description: 'Global Travel',
   icons: [
     {
       media: '(prefers-color-scheme: light)',
