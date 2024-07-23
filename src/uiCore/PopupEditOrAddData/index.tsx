@@ -38,6 +38,17 @@ export interface DataEditDto {
   position?: any;
 }
 
+class CustomFileList extends Array<File> {
+  constructor(...files: File[]) {
+    super(...files);
+    Object.setPrototypeOf(this, CustomFileList.prototype);
+  }
+
+  item(index: number): File {
+    return this[index];
+  }
+}
+
 export function PopupEditOrAddV1({
   //
   id,
@@ -100,7 +111,10 @@ export function PopupEditOrAddV1({
 
   // Editor
   const handleUploadImg = async (blobInfo: any, progress: any): Promise<string> => {
-    const uploadImg: string[] = handleUpLoadFiles ? await handleUpLoadFiles(blobInfo.blob()) : [];
+    const blob = blobInfo.blob();
+    const file = new File([blob], blobInfo.filename(), { type: blob.type });
+    const fileList = new CustomFileList(file);
+    const uploadImg: string[] = handleUpLoadFiles ? await handleUpLoadFiles(fileList) : [];
     return uploadImg[0];
   };
 

@@ -169,6 +169,11 @@ export const updateSpecialOfferCruise = (data: any) => {
   return axios.post(`cruise/special-offer`, data);
 };
 
+export const updateCruiseDetailLocation = (data: any) => {
+  const axios = new BaseAxios();
+  return axios.post(`cruise/detail-location`, data);
+};
+
 export const getAllTour = (page: number, limit: number, packetTourId: number, type?: number) => {
   const axios = new BaseAxios();
   let url = 'tour/cms?';

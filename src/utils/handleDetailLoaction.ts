@@ -3,7 +3,8 @@ import { setLoadingApp } from '@/lib/redux/system/settingSys';
 import { useEffect, useRef } from 'react';
 import moment from 'moment';
 import { resetDataDetailLocation, setDataDetailLocations } from '@/lib/redux/app/detailLocation.slice';
-import { createDetailLocation, getAllDetailLocation, updateDetailLocation } from './api';
+import { createDetailLocation, getAllDetailLocation, updateCruiseDetailLocation, updateDetailLocation } from './api';
+import { refreshDataCruise } from '@/lib/redux/app/cruise.slice';
 export const useDetailLocation = (idDestination: number, limitCustom?: number) => {
   const { detailLocations, refreshData, page, limit } = useAppSelector((state) => state.detailLocation);
   const destinationRef = useRef(idDestination);
@@ -50,6 +51,19 @@ export const handleUpdateDetailLocation = async (id: number, data: any, dispatch
   const req = await updateDetailLocation(id, data);
   if (req?.data) {
     dispatch(resetDataDetailLocation());
+  } else {
+    return false;
+  }
+};
+
+export const handleUpdateCruiseDetailLocation = async (cruiseId: number, detailLocationIds: number[], dispatch: any) => {
+  const req = await updateCruiseDetailLocation({
+    cruiseId,
+    detailLocationIds,
+  });
+
+  if (req?.data) {
+    dispatch(refreshDataCruise());
   } else {
     return false;
   }

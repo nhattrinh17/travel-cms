@@ -1,5 +1,6 @@
 'use client';
 
+import { UpdateCruiseDetailLocation } from '@/components/CruiseDetailLocation';
 import { HeaderContent } from '@/components/HeaderContent';
 import { ItinerariesCruiseAndTour } from '@/components/Itineraries';
 import { ReviewComponent } from '@/components/Review-Man';
@@ -19,7 +20,7 @@ import { useDestination } from '@/utils/handleDestination';
 import { useDetailLocation } from '@/utils/handleDetailLoaction';
 import { faUps } from '@fortawesome/free-brands-svg-icons';
 import { faRectangleList } from '@fortawesome/free-regular-svg-icons';
-import { faBed, faComment, faGift, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faBed, faComment, faGift, faLocationDot, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames/bind';
 import { useState } from 'react';
@@ -46,6 +47,7 @@ export function CruiseManageSection(): JSX.Element {
   const [showTypeRoom, setShowTypeRoom] = useState(false);
   const [showItineraries, setShowItineraries] = useState(false);
   const [showReview, setShowReview] = useState(false);
+  const [showLocationCruise, setShowLocationCruise] = useState(false);
 
   const setPageTour = (page: number) => {
     dispatch(
@@ -56,6 +58,22 @@ export function CruiseManageSection(): JSX.Element {
   };
 
   const dataDto: ItemAddOrUpdateDto[] = [
+    {
+      label: 'Destination',
+      name: 'destinationId',
+      readOnly: !!cruiseById,
+      type: 'options',
+      value: cruiseById?.destinationId || dataDestination[0]?.id,
+      canUpdate: !cruiseById,
+      dataOption: [
+        ...dataDestination.map((i) => {
+          return {
+            text: i.name,
+            value: i.id,
+          };
+        }),
+      ],
+    },
     {
       label: 'Name ',
       name: 'name',
@@ -193,9 +211,9 @@ export function CruiseManageSection(): JSX.Element {
         </div>
         <div className="my-3">
           <h3 className="font-medium text-base">Filter Cruise</h3>
-          <p className="text-red-500 mt-1">
+          {/* <p className="text-red-500 mt-1">
             Please selected <span className="underline">Destination</span> and <span className="underline">Detail Destination</span> before add cruise
-          </p>
+          </p> */}
           <div className="flex items-center mt-2">
             <select defaultValue={idDestination} onChange={(e) => setIdDestination(+e.target.value)} className="mr-5 outline-none border-[1px] rounded-2xl py-2 px-3">
               <option>--Select Destination--</option>
@@ -215,7 +233,7 @@ export function CruiseManageSection(): JSX.Element {
               ))}
             </select>
 
-            <div className="py-2 px-3 border-[1px] bg-white border-[#ccc] rounded-2xl w-fit cursor-pointer transition-all" onClick={() => idDestination && idDetailLocation && setIsCreate(true)}>
+            <div className="py-2 px-3 border-[1px] bg-white border-[#ccc] rounded-2xl w-fit cursor-pointer transition-all" onClick={() => setIsCreate(true)}>
               <span className="mr-1 text-base">Add Cruise</span>
               <FontAwesomeIcon className="text-xs" icon={faPlus} />
             </div>
@@ -223,7 +241,7 @@ export function CruiseManageSection(): JSX.Element {
         </div>
         <div className={cx('min-h-full flex-1')}>
           <Table
-            columnNotShow={['slug', 'linkTripadvisor', 'reviewTripadvisor', 'detail', 'destinationId', 'detailLocationId', 'contentBrief', 'images', 'travelerLoves', 'accompaniedServices', 'specialOffers', 'otherServiceBookings', 'timeLaunched']}
+            columnNotShow={['slug', 'linkTripadvisor', 'detailLocations', 'reviewTripadvisor', 'detail', 'destinationId', 'detailLocationId', 'contentBrief', 'images', 'travelerLoves', 'accompaniedServices', 'specialOffers', 'otherServiceBookings', 'timeLaunched']}
             textColor="black"
             data={data}
             columnDelete={false}
@@ -243,6 +261,14 @@ export function CruiseManageSection(): JSX.Element {
                 handleClick(item) {
                   setIdSelect(item.id);
                   setShowSpecialOffer(true);
+                },
+              },
+              {
+                name: 'Location',
+                icon: faLocationDot,
+                handleClick(item) {
+                  setIdSelect(item.id);
+                  setShowLocationCruise(true);
                 },
               },
               {
@@ -326,6 +352,7 @@ export function CruiseManageSection(): JSX.Element {
         {showTypeRoom ? <RoomCruise idCruise={idSelect} onCancel={() => setShowTypeRoom(false)} /> : <></>}
         {showItineraries ? <ItinerariesCruiseAndTour idCruiseOrTour={idSelect} onCancel={() => setShowItineraries(false)} /> : <></>}
         {showReview ? <ReviewComponent idCruise={idSelect} idTour={0} onCancel={() => setShowReview(false)} /> : <></>}
+        {showLocationCruise ? <UpdateCruiseDetailLocation idDestination={data.find((i) => i.id == idSelect)?.destinationId || 0} detailLocationInit={data.find((i) => i.id == idSelect)?.detailLocations.map((i) => i.id) || []} idCruise={idSelect} onCancel={() => setShowLocationCruise(false)} /> : <></>}
       </div>
     </main>
   );
