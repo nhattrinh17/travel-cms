@@ -97,7 +97,25 @@ export function CruiseManageSection(): JSX.Element {
       name: 'price',
       type: 'number',
       readOnly: false,
-      value: cruiseById?.price || '',
+      value: cruiseById?.price || 0,
+      canUpdate: true,
+      placeholder: '',
+    },
+    {
+      label: 'Link tripadvisor',
+      name: 'linkTripadvisor',
+      type: 'text',
+      readOnly: false,
+      value: cruiseById?.linkTripadvisor || '',
+      canUpdate: true,
+      placeholder: 'Enter link...',
+    },
+    {
+      label: 'Total review tripadvisor',
+      name: 'reviewTripadvisor',
+      type: 'number',
+      readOnly: false,
+      value: cruiseById?.reviewTripadvisor || 0,
       canUpdate: true,
       placeholder: '',
     },
@@ -106,7 +124,7 @@ export function CruiseManageSection(): JSX.Element {
       name: 'discount',
       type: 'number',
       readOnly: false,
-      value: cruiseById?.discount || '',
+      value: cruiseById?.discount || 0,
       canUpdate: true,
       placeholder: '',
     },
@@ -205,7 +223,7 @@ export function CruiseManageSection(): JSX.Element {
         </div>
         <div className={cx('min-h-full flex-1')}>
           <Table
-            columnNotShow={['slug', 'detail', 'destinationId', 'detailLocationId', 'contentBrief', 'images', 'travelerLoves', 'accompaniedServices', 'specialOffers', 'otherServiceBookings', 'timeLaunched']}
+            columnNotShow={['slug', 'linkTripadvisor', 'reviewTripadvisor', 'detail', 'destinationId', 'detailLocationId', 'contentBrief', 'images', 'travelerLoves', 'accompaniedServices', 'specialOffers', 'otherServiceBookings', 'timeLaunched']}
             textColor="black"
             data={data}
             columnDelete={false}
@@ -275,7 +293,7 @@ export function CruiseManageSection(): JSX.Element {
             }}
             onSubmit={handleUpdateCruise}
             position={'fixed'}
-            maxWidth={'100%'}
+            maxWidth={'90%'}
             handleUpLoadFiles={(file) => upLoadFiles('image', file)}
           />
         )}

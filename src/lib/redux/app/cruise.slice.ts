@@ -17,6 +17,8 @@ interface cruiseSlice {
     timeLaunched: number;
     styleCruise: string;
     createdAt: string;
+    linkTripadvisor: string;
+    reviewTripadvisor: number;
     accompaniedServices: { id: number }[];
     specialOffers: { id: number }[];
     otherServiceBookings: { id: number }[];
