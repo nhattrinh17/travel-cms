@@ -94,13 +94,21 @@ export function PopupEditOrAddV1({
     });
   };
 
-  const handleChangeFile = (urlImage: string, col: ItemAddOrUpdateDto) => {
+  const handleChangeFile = (urlImage: string[], col: ItemAddOrUpdateDto, deleteImage = false) => {
     setDataState((pre) => {
       const dataNew = pre.map((item) => {
         if (item.name === col.name) {
+          let newImages = item.value ? item.value.toString().split('*_*') : [];
+          console.log('🚀 ~ dataNew ~ newImages:', item.value, newImages);
+          if (!deleteImage) {
+            newImages.push(...urlImage);
+          } else {
+            newImages = [...newImages].filter((item) => !urlImage.includes(item));
+          }
+          console.log('🚀 ~ dataNew ~ newImages:', newImages);
           return {
             ...item,
-            value: urlImage,
+            value: newImages.join('*_*'),
           };
         } else {
           return item;
@@ -183,7 +191,7 @@ export function PopupEditOrAddV1({
                       if (e.target.files && handleUpLoadFiles) {
                         const urlImage = await handleUpLoadFiles(e.target.files);
                         if (urlImage.length) {
-                          handleChangeFile(urlImage.join('*_*'), col);
+                          handleChangeFile(urlImage, col);
                         }
                       }
                     }}
@@ -193,15 +201,24 @@ export function PopupEditOrAddV1({
                       .toString()
                       .split('*_*')
                       .map((img, index) => (
-                        <Image
-                          //
-                          key={index}
-                          alt="Image demo"
-                          src={String(img) || '/no-image.jpg'}
-                          width={350}
-                          height={250}
-                          className={cx('image__demo', 'rounded-2xl')}
-                        />
+                        <div key={index} className="w-full relative">
+                          <div
+                            className={cx('absolute top-2 right-2 rounded-full bg-white w-6 h-6 text-center shadow-lg cursor-pointer', {
+                              hidden: !img,
+                            })}
+                            onClick={() => handleChangeFile([img], col, true)}>
+                            <FontAwesomeIcon icon={faXmark} className=" text-base" />
+                          </div>
+                          <Image
+                            //
+                            key={index}
+                            alt="Image demo"
+                            src={String(img) || '/no-image.jpg'}
+                            width={350}
+                            height={250}
+                            className={cx('image__demo', 'rounded-2xl')}
+                          />
+                        </div>
                       ))}
                   </div>
                 </div>
