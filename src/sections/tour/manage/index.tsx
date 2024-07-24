@@ -88,6 +88,7 @@ export function TourManageSection(): JSX.Element {
       readOnly: false,
       value: tourById?.name || '',
       canUpdate: true,
+      required: true,
       placeholder: 'Enter name...',
     },
     {
@@ -96,6 +97,7 @@ export function TourManageSection(): JSX.Element {
       type: 'textarea',
       readOnly: false,
       value: tourById?.contentBrief || '',
+      required: true,
       canUpdate: true,
       placeholder: 'Enter ...',
     },
@@ -104,7 +106,8 @@ export function TourManageSection(): JSX.Element {
       name: 'detail',
       type: 'editor',
       readOnly: false,
-      value: tourById?.detail || '',
+      value: tourById?.detail || 'Enter detail...',
+      required: true,
       canUpdate: true,
       placeholder: 'Enter ...',
     },
@@ -115,6 +118,7 @@ export function TourManageSection(): JSX.Element {
       readOnly: false,
       value: tourById?.price || '',
       canUpdate: true,
+      required: true,
       placeholder: '',
     },
     {

@@ -271,7 +271,7 @@ export function PopupEditOrAddV1({
               onSubmit={(e) => {
                 // e.preventDefault();
               }}>
-              Xác nhận
+              Submit
             </button>
           </div>
         </div>
