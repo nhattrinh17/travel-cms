@@ -14,7 +14,7 @@ export class BaseAxios {
         Authorization: `Bearer ${accessToken}`,
         'Access-Control-Allow-Origin': '*',
       },
-      timeout: 10000,
+      timeout: 20000,
     });
   }
 
