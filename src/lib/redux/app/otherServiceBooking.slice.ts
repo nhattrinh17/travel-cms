@@ -35,6 +35,7 @@ const otherServiceBookingCurrentSlice = createSlice({
     setLimitOrPageOtherServiceBooking: (state, action: { payload: { limit?: number; page?: number } }) => {
       state.limit = action.payload.limit ? action.payload.limit : state.limit;
       state.page = action.payload.page ? action.payload.page : state.page;
+      state.refreshData = true;
     },
     resetDataOtherServiceBooking: (state) => {
       state.otherServiceBookings = [];

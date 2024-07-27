@@ -37,6 +37,7 @@ const reviewSlice = createSlice({
     setLimitOrPageReview: (state, action: { payload: { limit?: number; page?: number } }) => {
       state.limit = action.payload.limit ? action.payload.limit : state.limit;
       state.page = action.payload.page ? action.payload.page : state.page;
+      state.refreshData = true;
     },
     resetDataReview: (state) => {
       state.reviews = [];
