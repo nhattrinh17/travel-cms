@@ -74,6 +74,7 @@ export function BookingCruiseSection(): JSX.Element {
       label: 'Subject',
       name: 'subject',
       readOnly: false,
+      required: true,
       type: 'text',
       value: '',
       canUpdate: true,
