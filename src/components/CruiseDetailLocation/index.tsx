@@ -1,11 +1,12 @@
 'use client';
 
 import { useAppDispatch } from '@/lib';
+import { resetDataDetailLocation } from '@/lib/redux/app/detailLocation.slice';
 import { useDestination } from '@/utils/handleDestination';
 import { handleUpdateCruiseDetailLocation, useDetailLocation } from '@/utils/handleDetailLoaction';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export function UpdateCruiseDetailLocation({
   //
@@ -21,8 +22,13 @@ export function UpdateCruiseDetailLocation({
 }): JSX.Element {
   const { data } = useDetailLocation(idDestination, 20);
   const [detailLocation, setDetailLocation] = useState<number[]>(detailLocationInit);
-  console.log('🚀 ~ detailLocation:', detailLocation);
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    return () => {
+      dispatch(resetDataDetailLocation());
+    };
+  }, []);
 
   return (
     <div className="absolute top-0 left-0 bottom-0 right-0 bg-[#dadae178] flex justify-center items-center">
