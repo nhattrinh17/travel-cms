@@ -4,7 +4,7 @@ interface TourSliceDto {
   tours: {
     id: number;
     packetTourId: string;
-    type: string;
+    type: number;
     name: string;
     contentBrief: string;
     detail: number;

@@ -34,6 +34,7 @@ export const useTour = (packetTourId: number, type?: number) => {
       tours.map((i) => {
         return {
           ...i,
+          typeTour: i.type == 0 ? 'Package Tour' : 'Daily Tour',
           isFlashSale: i.isFlashSale ? 'Run flash sales' : 'Normal',
           createdAt: moment(i.createdAt).format('YYYY-MM-DD HH:mm:ss'),
         };

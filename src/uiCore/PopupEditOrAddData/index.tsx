@@ -99,13 +99,13 @@ export function PopupEditOrAddV1({
       const dataNew = pre.map((item) => {
         if (item.name === col.name) {
           let newImages = item.value ? item.value.toString().split('*_*') : [];
-          console.log('🚀 ~ dataNew ~ newImages:', item.value, newImages);
+          // console.log('🚀 ~ dataNew ~ newImages:', item.value, newImages);
           if (!deleteImage) {
             newImages.push(...urlImage);
           } else {
             newImages = [...newImages].filter((item) => !urlImage.includes(item));
           }
-          console.log('🚀 ~ dataNew ~ newImages:', newImages);
+          // console.log('🚀 ~ dataNew ~ newImages:', newImages);
           return {
             ...item,
             value: newImages.join('*_*'),

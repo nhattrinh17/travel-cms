@@ -198,7 +198,7 @@ export function TourManageSection(): JSX.Element {
         </div>
         <div className={cx('min-h-full flex-1')}>
           <Table
-            columnNotShow={['slug', 'detail', 'contentBrief', 'images', 'travelerLoves', 'accompaniedServices', 'specialOffers']}
+            columnNotShow={['slug', 'detail', 'contentBrief', 'images', 'travelerLoves', 'accompaniedServices', 'specialOffers', 'packetTourId', 'type']}
             textColor="black"
             data={data}
             columnDelete={false}
@@ -262,7 +262,7 @@ export function TourManageSection(): JSX.Element {
               handleUpdateTour(id, data, dispatch);
             }}
             position={'fixed'}
-            maxWidth={'100%'}
+            maxWidth={'90%'}
             handleUpLoadFiles={(file) => upLoadFiles('image', file)}
           />
         )}
