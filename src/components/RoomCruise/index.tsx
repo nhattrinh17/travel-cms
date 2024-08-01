@@ -144,7 +144,7 @@ export function RoomCruise({
 
   return (
     <div className="absolute top-0 left-0 bottom-0 right-0 bg-[#dadae178] flex justify-center items-center">
-      <div className="bg-white p-4 rounded-md relative w-[75%]">
+      <div className="bg-white p-4 rounded-md relative w-[80%]">
         <div className="">
           <h3>Update Accompanied Special Offer</h3>
           <FontAwesomeIcon onClick={onCancel} icon={faXmark} className="absolute top-5 right-5 cursor-pointer" />
@@ -157,7 +157,7 @@ export function RoomCruise({
         </div>
         <Table
           //
-          columnNotShow={['cruiseId', 'images', 'amenities', 'content', 'specialService']}
+          columnNotShow={['cruiseId', 'images', 'amenities', 'content', 'specialService', 'isViewOcean']}
           columnDelete={false}
           columnEdit
           data={dataRoom}

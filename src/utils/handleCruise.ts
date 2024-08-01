@@ -101,7 +101,7 @@ export const useRoomCruise = (idCruise: number, refreshData: boolean) => {
   return data.map((i) => {
     return {
       ...i,
-      isViewOcean: i.isViewOcean ? 'Yes' : 'No',
+      viewOcean: i.isViewOcean ? 'Yes' : 'No',
     };
   });
 };
