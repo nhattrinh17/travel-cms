@@ -70,6 +70,7 @@ export const useRoomCruise = (idCruise: number, refreshData: boolean) => {
       id: number;
       name: string;
       price: number;
+      priceDetail: string;
       totalRooms: number;
       typeBed: number;
       isViewOcean: string;

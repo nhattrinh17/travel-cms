@@ -33,14 +33,22 @@ export function RoomCruise({
       canUpdate: true,
       placeholder: 'Enter name...',
     },
+    // {
+    //   label: 'Price',
+    //   name: 'price',
+    //   type: 'number',
+    //   readOnly: false,
+    //   value: roomById?.price || 0,
+    //   canUpdate: true,
+    //   placeholder: '',
+    // },
     {
-      label: 'Price',
-      name: 'price',
-      type: 'number',
+      label: 'Price detail',
+      name: 'priceDetail',
+      type: 'editor',
       readOnly: false,
-      value: roomById?.price || 0,
+      value: roomById?.priceDetail || 0,
       canUpdate: true,
-      placeholder: '',
     },
     {
       label: 'Total room',
@@ -157,7 +165,7 @@ export function RoomCruise({
         </div>
         <Table
           //
-          columnNotShow={['cruiseId', 'images', 'amenities', 'content', 'specialService', 'isViewOcean']}
+          columnNotShow={['cruiseId', 'images', 'amenities', 'price', 'priceDetail', 'content', 'specialService', 'isViewOcean']}
           columnDelete={false}
           columnEdit
           data={dataRoom}
