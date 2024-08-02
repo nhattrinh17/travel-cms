@@ -134,9 +134,9 @@ export const updateCruise = (id: number, data: any) => {
   return axios.patch(`cruise/${id}`, data);
 };
 
-export const getAllRoomCruise = (idCruise: number) => {
+export const getAllRoomCruise = (idCruise: number, itinerariesId: number) => {
   const axios = new BaseAxios();
-  return axios.get(`cruise/${idCruise}/room`);
+  return axios.get(`cruise/${idCruise}/room?itinerariesId=${itinerariesId}`);
 };
 
 export const addOrUpdateRoomCruise = (data: any) => {

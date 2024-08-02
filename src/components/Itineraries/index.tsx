@@ -6,9 +6,10 @@ import Table from '@/uiCore/Table';
 import { addOrUpdateItinerariesCruise, addOrUpdateItinerariesTour } from '@/utils/api';
 import { useItinerariesCruise } from '@/utils/handleCruise';
 import { useItinerariesTour } from '@/utils/handleTour';
-import { faPlus, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faBed, faPlus, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState } from 'react';
+import { RoomCruise } from '../RoomCruise';
 
 export function ItinerariesCruiseAndTour({
   //
@@ -25,6 +26,8 @@ export function ItinerariesCruiseAndTour({
   const [idEdit, setIdEdit] = useState<number>();
   const [isCreate, setIsCreate] = useState(false);
   const itinerariesId = dataItineraries.find((i) => i.id == idEdit);
+  const [showTypeRoom, setShowTypeRoom] = useState(false);
+  const [idSelect, setIdSelect] = useState<number>(0);
 
   const dataDto: ItemAddOrUpdateDto[] = [
     {
@@ -85,6 +88,20 @@ export function ItinerariesCruiseAndTour({
           columnEdit
           data={dataItineraries}
           handleEdit={(id) => setIdEdit(id)}
+          moreColumnsOptions={
+            !isForTour
+              ? [
+                  {
+                    name: 'Type Room',
+                    icon: faBed,
+                    handleClick(item) {
+                      setIdSelect(item.id);
+                      setShowTypeRoom(true);
+                    },
+                  },
+                ]
+              : []
+          }
         />
         {(idEdit || isCreate) && (
           <PopupEditOrAddV1
@@ -132,6 +149,7 @@ export function ItinerariesCruiseAndTour({
           />
         )}
       </div>
+      {showTypeRoom ? <RoomCruise idCruise={idCruiseOrTour} itinerariesId={idSelect} onCancel={() => setShowTypeRoom(false)} /> : <></>}
     </div>
   );
 }

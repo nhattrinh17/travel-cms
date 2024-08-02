@@ -44,7 +44,7 @@ export function CruiseManageSection(): JSX.Element {
   const [idSelect, setIdSelect] = useState<number>(0);
   const [showService, setShowService] = useState(false);
   const [showSpecialOffer, setShowSpecialOffer] = useState(false);
-  const [showTypeRoom, setShowTypeRoom] = useState(false);
+
   const [showItineraries, setShowItineraries] = useState(false);
   const [showReview, setShowReview] = useState(false);
   const [showLocationCruise, setShowLocationCruise] = useState(false);
@@ -284,14 +284,7 @@ export function CruiseManageSection(): JSX.Element {
                   setShowItineraries(true);
                 },
               },
-              {
-                name: 'Type Room',
-                icon: faBed,
-                handleClick(item) {
-                  setIdSelect(item.id);
-                  setShowTypeRoom(true);
-                },
-              },
+
               {
                 name: 'Review',
                 icon: faComment,
@@ -352,7 +345,6 @@ export function CruiseManageSection(): JSX.Element {
           <></>
         )}
 
-        {showTypeRoom ? <RoomCruise idCruise={idSelect} onCancel={() => setShowTypeRoom(false)} /> : <></>}
         {showItineraries ? <ItinerariesCruiseAndTour idCruiseOrTour={idSelect} onCancel={() => setShowItineraries(false)} /> : <></>}
         {showReview ? <ReviewComponent idCruise={idSelect} idTour={0} onCancel={() => setShowReview(false)} /> : <></>}
         {showLocationCruise ? <UpdateCruiseDetailLocation idDestination={data.find((i) => i.id == idSelect)?.destinationId || 0} detailLocationInit={data.find((i) => i.id == idSelect)?.detailLocations.map((i) => i.id) || []} idCruise={idSelect} onCancel={() => setShowLocationCruise(false)} /> : <></>}

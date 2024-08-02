@@ -13,12 +13,14 @@ export function RoomCruise({
   //
   onCancel,
   idCruise,
+  itinerariesId,
 }: {
   onCancel: () => void;
   idCruise: number;
+  itinerariesId: number;
 }): JSX.Element {
   const [refreshData, setRefreshData] = useState(true);
-  const dataRoom = useRoomCruise(idCruise, refreshData);
+  const dataRoom = useRoomCruise(idCruise, itinerariesId, refreshData);
   const [idEdit, setIdEdit] = useState<number>();
   const [isCreate, setIsCreate] = useState(false);
   const roomById = dataRoom.find((i) => i.id == idEdit);
@@ -32,24 +34,19 @@ export function RoomCruise({
       value: roomById?.name || '',
       canUpdate: true,
       placeholder: 'Enter name...',
+      required: true,
     },
-    // {
-    //   label: 'Price',
-    //   name: 'price',
-    //   type: 'number',
-    //   readOnly: false,
-    //   value: roomById?.price || 0,
-    //   canUpdate: true,
-    //   placeholder: '',
-    // },
     {
-      label: 'Price detail',
-      name: 'priceDetail',
-      type: 'editor',
+      label: 'Price',
+      name: 'price',
+      type: 'number',
       readOnly: false,
-      value: roomById?.priceDetail || 0,
+      value: roomById?.price || 0,
       canUpdate: true,
+      placeholder: '',
+      required: true,
     },
+
     {
       label: 'Total room',
       name: 'totalRooms',
@@ -58,6 +55,7 @@ export function RoomCruise({
       value: roomById?.totalRooms || 0,
       canUpdate: true,
       placeholder: '',
+      required: true,
     },
     {
       label: 'Max adult',
@@ -67,6 +65,7 @@ export function RoomCruise({
       value: roomById?.maxAdult || 0,
       canUpdate: true,
       placeholder: '',
+      required: true,
     },
     {
       label: 'Max Children',
@@ -85,6 +84,7 @@ export function RoomCruise({
       value: roomById?.typeBed || '',
       canUpdate: true,
       placeholder: '',
+      required: true,
     },
     {
       label: 'View Ocean',
@@ -103,6 +103,7 @@ export function RoomCruise({
       value: roomById?.acreage || 0,
       canUpdate: true,
       placeholder: '',
+      required: true,
     },
     {
       label: 'Location',
@@ -132,6 +133,14 @@ export function RoomCruise({
       placeholder: '',
     },
     {
+      label: 'Notes',
+      name: 'notes',
+      type: 'textarea',
+      readOnly: false,
+      value: roomById?.notes || '',
+      canUpdate: true,
+    },
+    {
       label: 'Detail',
       name: 'content',
       type: 'editor',
@@ -154,7 +163,7 @@ export function RoomCruise({
     <div className="absolute top-0 left-0 bottom-0 right-0 bg-[#dadae178] flex justify-center items-center">
       <div className="bg-white p-4 rounded-md relative w-[80%]">
         <div className="">
-          <h3>Update Accompanied Special Offer</h3>
+          <h3>Update Room Cruise</h3>
           <FontAwesomeIcon onClick={onCancel} icon={faXmark} className="absolute top-5 right-5 cursor-pointer" />
         </div>
         <div className="py-3">
@@ -182,6 +191,7 @@ export function RoomCruise({
             id={idEdit}
             onSubmitCreate={async (data, dispatch) => {
               data.cruiseId = idCruise;
+              data.itinerariesId = itinerariesId;
               const res = await addOrUpdateRoomCruise(data);
               if (res.data) {
                 setRefreshData((pre) => !pre);
@@ -189,6 +199,7 @@ export function RoomCruise({
             }}
             onSubmit={async (id, data, dispatch) => {
               data.cruiseId = idCruise;
+              data.itinerariesId = itinerariesId;
               data.roomId = idEdit;
               const res = await addOrUpdateRoomCruise(data);
               if (res.data) {

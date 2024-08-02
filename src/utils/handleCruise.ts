@@ -64,7 +64,7 @@ export const handleUpdateCruise = async (id: number, data: any, dispatch: any) =
   }
 };
 
-export const useRoomCruise = (idCruise: number, refreshData: boolean) => {
+export const useRoomCruise = (idCruise: number, itinerariesId: number, refreshData: boolean) => {
   const [data, setData] = useState<
     {
       id: number;
@@ -78,6 +78,7 @@ export const useRoomCruise = (idCruise: number, refreshData: boolean) => {
       location: string;
       images: string;
       specialService: string;
+      notes: string;
       content: string;
       maxAdult: number;
       maxChildren: number;
@@ -88,7 +89,7 @@ export const useRoomCruise = (idCruise: number, refreshData: boolean) => {
   useEffect(() => {
     async function fetchData() {
       if (idCruise) {
-        const res = await getAllRoomCruise(idCruise);
+        const res = await getAllRoomCruise(idCruise, itinerariesId);
         if (res?.data) {
           const { data, pagination } = res?.data;
           setData(data);
