@@ -335,6 +335,7 @@ export function PopupEditOrAddV1({
                   value={col.value ?? ''}
                   name={col.name}
                   type={col.type}
+                  step={0.1}
                   required={col.required}
                   readOnly={col.readOnly}
                   defaultChecked={Boolean(col.value)}

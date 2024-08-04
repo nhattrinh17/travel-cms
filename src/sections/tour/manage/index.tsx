@@ -122,6 +122,16 @@ export function TourManageSection(): JSX.Element {
       placeholder: '',
     },
     {
+      label: 'Stars',
+      name: 'stars',
+      type: 'number',
+      required: true,
+      readOnly: false,
+      value: tourById?.stars || 0,
+      canUpdate: true,
+      placeholder: '',
+    },
+    {
       label: 'Discount (%)',
       name: 'discount',
       type: 'number',

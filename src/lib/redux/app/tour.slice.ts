@@ -10,6 +10,7 @@ interface TourSliceDto {
     detail: number;
     images: string;
     price: number;
+    stars: number;
     discount: number;
     isFlashSale: boolean;
     travelerLoves: string;

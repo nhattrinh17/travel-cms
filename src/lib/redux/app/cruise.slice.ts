@@ -13,6 +13,7 @@ interface cruiseSlice {
     isFlashSale: boolean;
     travelerLoves: string;
     price: number;
+    stars: number;
     totalRoom: number;
     timeLaunched: number;
     styleCruise: string;
