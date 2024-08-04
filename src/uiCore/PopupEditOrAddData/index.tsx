@@ -1,3 +1,5 @@
+'use client';
+
 import classNames from 'classnames/bind';
 import styles from './styles.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -5,19 +7,28 @@ import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { ChangeEvent, useRef, useState } from 'react';
 import { useAppDispatch } from '@/lib';
 import Image from 'next/image';
-import { Editor } from '@tinymce/tinymce-react';
 
-import 'froala-editor/js/plugins.pkgd.min.js';
 import 'froala-editor/css/froala_editor.pkgd.min.css';
 import 'froala-editor/css/froala_style.min.css';
 import 'froala-editor/css/themes/dark.min.css';
 import 'froala-editor/css/froala_editor.pkgd.min.css';
-import FroalaEditor from 'froala-editor';
-import FroalaEditorComponent from 'react-froala-wysiwyg';
+import dynamic from 'next/dynamic';
 
-interface EditorProps {
-  handleUpLoadFiles: (file: FileList) => Promise<string[]>;
-}
+// import FroalaEditorComponent from 'react-froala-wysiwyg';
+
+const FroalaEditorComponent = dynamic(
+  async () => {
+    const values = await Promise.all([
+      import('react-froala-wysiwyg'), // must be first import since we are doing values[0] in return
+      import('froala-editor/js/plugins.pkgd.min.js'),
+    ]);
+    return values[0];
+  },
+  {
+    loading: () => <p>LOADING!!!</p>,
+    ssr: false,
+  },
+);
 
 const cx = classNames.bind(styles);
 
@@ -244,40 +255,53 @@ export function PopupEditOrAddV1({
                   </div>
                 </div>
               ) : col.type == 'editor' ? (
-                // <Editor
-                //   apiKey="luqq3j7fb1fwxw205pen9j2yi2uw2mldo3lwmkb6j4r8w0yt"
-                //   init={{
-                //     plugins: ['advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview', 'anchor', 'searchreplace', 'visualblocks', 'fullscreen', 'insertdatetime', 'media', 'table', 'help', 'wordcount'],
-                //     // plugins: ['a11ychecker', 'advlist', 'advcode', 'advtable', 'autolink', 'checklist', 'export', 'lists', 'link', 'image', 'charmap', 'preview', 'anchor', 'searchreplace', 'visualblocks', 'powerpaste', 'fullscreen', 'formatpainter', 'insertdatetime', 'media', 'table', 'help', 'wordcount'],
-                //     toolbar: 'undo redo | casechange blocks | bold italic backcolor | ' + 'alignleft aligncenter alignright alignjustify | ' + 'bullist numlist checklist outdent indent | removeformat | a11ycheck code table help',
-                //     images_file_types: 'jpeg,jpg,jpe,jfi,jif,jfif,png,gif,bmp,webp',
-
-                //     automatic_uploads: true,
-                //     images_upload_handler: handleUploadImg,
-
-                //     menubar: true,
-                //     tinycomments_mode: 'embedded',
-                //     tinycomments_author: 'Author name',
-                //     // mergetags_list: [
-                //     //   { value: 'First.Name', title: 'First Name' },
-                //     //   { value: 'Email', title: 'Email' },
-                //     // ],
-                //     ai_request: (request: any, respondWith: any) => respondWith.string(() => Promise.reject('See docs to implement AI Assistant')),
-                //   }}
-                //   onInit={(_evt, editor) => {
-                //     editorRef.current = {
-                //       ...editorRef.current,
-                //       [col.name]: editor,
-                //     };
-                //   }}
-                //   initialValue={String(col.value)}
-                // />
                 <FroalaEditorComponent
                   tag="textarea"
                   config={{
                     placeholderText: 'Edit Your Content Here!',
                     charCounterCount: true,
-                    toolbarButtons: ['bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript', '|', 'fontFamily', 'fontSize', 'color', 'inlineStyle', 'paragraphStyle', '|', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'outdent', 'indent', 'quote', '-', 'insertLink', 'insertImage', 'insertVideo', 'insertFile', 'insertTable', '|', 'emoticons', 'specialCharacters', 'insertHR', 'selectAll', 'clearFormatting', '|', 'print', 'help', 'html', '|', 'undo', 'redo'],
+                    toolbarButtons: [
+                      //
+                      'bold',
+                      'italic',
+                      'underline',
+                      'strikeThrough',
+                      'subscript',
+                      'superscript',
+                      '|',
+                      'fontFamily',
+                      'fontSize',
+                      'color',
+                      'inlineStyle',
+                      'paragraphStyle',
+                      '|',
+                      'paragraphFormat',
+                      'align',
+                      'formatOL',
+                      'formatUL',
+                      'outdent',
+                      'indent',
+                      'quote',
+                      '-',
+                      'insertLink',
+                      'insertImage',
+                      // 'insertVideo',
+                      // 'insertFile',
+                      'insertTable',
+                      '|',
+                      'emoticons',
+                      'specialCharacters',
+                      'insertHR',
+                      'selectAll',
+                      'clearFormatting',
+                      '|',
+                      'print',
+                      'help',
+                      'html',
+                      '|',
+                      'undo',
+                      'redo',
+                    ],
                     pluginsEnabled: ['align', 'charCounter', 'codeBeautifier', 'codeView', 'colors', 'draggable', 'emoticons', 'entities', 'file', 'fontFamily', 'fontSize', 'fullscreen', 'image', 'imageManager', 'inlineStyle', 'lineBreaker', 'link', 'lists', 'paragraphFormat', 'paragraphStyle', 'quickInsert', 'quote', 'save', 'table', 'url', 'video', 'wordPaste'],
                     imageUpload: true,
                     imageUploadMethod: 'POST',

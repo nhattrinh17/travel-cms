@@ -38,10 +38,14 @@ body {
   }
 }
 
-
 /* overwrite tiny cloud */
 .tox .tox-notification--warn,
 .tox .tox-notification--warning,
 .tox .tox-notification--warning {
+  display: none !important;
+}
+
+.fr-wrapper > div:first-child {
+  /* Các kiểu CSS của bạn */
   display: none !important;
 }
