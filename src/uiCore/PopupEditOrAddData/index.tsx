@@ -7,6 +7,18 @@ import { useAppDispatch } from '@/lib';
 import Image from 'next/image';
 import { Editor } from '@tinymce/tinymce-react';
 
+import 'froala-editor/js/plugins.pkgd.min.js';
+import 'froala-editor/css/froala_editor.pkgd.min.css';
+import 'froala-editor/css/froala_style.min.css';
+import 'froala-editor/css/themes/dark.min.css';
+import 'froala-editor/css/froala_editor.pkgd.min.css';
+import FroalaEditor from 'froala-editor';
+import FroalaEditorComponent from 'react-froala-wysiwyg';
+
+interface EditorProps {
+  handleUpLoadFiles: (file: FileList) => Promise<string[]>;
+}
+
 const cx = classNames.bind(styles);
 
 export interface ItemAddOrUpdateDto {
@@ -38,17 +50,6 @@ export interface DataEditDto {
   position?: any;
 }
 
-class CustomFileList extends Array<File> {
-  constructor(...files: File[]) {
-    super(...files);
-    Object.setPrototypeOf(this, CustomFileList.prototype);
-  }
-
-  item(index: number): File {
-    return this[index];
-  }
-}
-
 export function PopupEditOrAddV1({
   //
   id,
@@ -66,7 +67,14 @@ export function PopupEditOrAddV1({
   const [dataState, setDataState] = useState(data);
   // console.log('🚀 ~ dataState:', dataState);
   const isUnableBtn = dataState.some((item) => item.canUpdate);
-  const editorRef = useRef<any>();
+  const [editorContents, setEditorContents] = useState<{ [key: string]: string }>(
+    data.reduce((acc, item) => {
+      if (item.type === 'editor') {
+        acc[item.name] = item.value as string;
+      }
+      return acc;
+    }, {} as { [key: string]: string }),
+  );
 
   const dispatch = useAppDispatch();
 
@@ -118,13 +126,26 @@ export function PopupEditOrAddV1({
     });
   };
 
-  // Editor
-  const handleUploadImg = async (blobInfo: any, progress: any): Promise<string> => {
-    const blob = blobInfo.blob();
-    const file = new File([blob], blobInfo.filename(), { type: blob.type });
-    const fileList = new CustomFileList(file);
-    const uploadImg: string[] = handleUpLoadFiles ? await handleUpLoadFiles(fileList) : [];
-    return uploadImg[0];
+  // Editor Froala
+  const handleImageUpload = (files: File[], insertImage: (url: string) => void) => {
+    if (handleUpLoadFiles) {
+      handleUpLoadFiles(files as unknown as FileList)
+        .then((urls) => {
+          urls.forEach((url) => {
+            insertImage(url);
+          });
+        })
+        .catch((error) => {
+          console.error('Image upload error:', error);
+        });
+    }
+  };
+
+  const handleModelChange = (name: string, model: string) => {
+    setEditorContents((prev) => ({
+      ...prev,
+      [name]: model,
+    }));
   };
 
   return (
@@ -146,7 +167,7 @@ export function PopupEditOrAddV1({
           dataState.forEach((item, index) => {
             if (item.canUpdate) {
               if (item.type !== 'editor') dataSend[item.name] = item.value;
-              else dataSend[item.name] = editorRef.current[item.name].getContent();
+              else dataSend[item.name] = dataSend[item.name] = editorContents[item.name];
             }
           });
           if (id) {
@@ -223,33 +244,55 @@ export function PopupEditOrAddV1({
                   </div>
                 </div>
               ) : col.type == 'editor' ? (
-                <Editor
-                  apiKey="luqq3j7fb1fwxw205pen9j2yi2uw2mldo3lwmkb6j4r8w0yt"
-                  init={{
-                    plugins: ['advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview', 'anchor', 'searchreplace', 'visualblocks', 'fullscreen', 'insertdatetime', 'media', 'table', 'help', 'wordcount'],
-                    // plugins: ['a11ychecker', 'advlist', 'advcode', 'advtable', 'autolink', 'checklist', 'export', 'lists', 'link', 'image', 'charmap', 'preview', 'anchor', 'searchreplace', 'visualblocks', 'powerpaste', 'fullscreen', 'formatpainter', 'insertdatetime', 'media', 'table', 'help', 'wordcount'],
-                    toolbar: 'undo redo | casechange blocks | bold italic backcolor | ' + 'alignleft aligncenter alignright alignjustify | ' + 'bullist numlist checklist outdent indent | removeformat | a11ycheck code table help',
-                    images_file_types: 'jpeg,jpg,jpe,jfi,jif,jfif,png,gif,bmp,webp',
+                // <Editor
+                //   apiKey="luqq3j7fb1fwxw205pen9j2yi2uw2mldo3lwmkb6j4r8w0yt"
+                //   init={{
+                //     plugins: ['advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview', 'anchor', 'searchreplace', 'visualblocks', 'fullscreen', 'insertdatetime', 'media', 'table', 'help', 'wordcount'],
+                //     // plugins: ['a11ychecker', 'advlist', 'advcode', 'advtable', 'autolink', 'checklist', 'export', 'lists', 'link', 'image', 'charmap', 'preview', 'anchor', 'searchreplace', 'visualblocks', 'powerpaste', 'fullscreen', 'formatpainter', 'insertdatetime', 'media', 'table', 'help', 'wordcount'],
+                //     toolbar: 'undo redo | casechange blocks | bold italic backcolor | ' + 'alignleft aligncenter alignright alignjustify | ' + 'bullist numlist checklist outdent indent | removeformat | a11ycheck code table help',
+                //     images_file_types: 'jpeg,jpg,jpe,jfi,jif,jfif,png,gif,bmp,webp',
 
-                    automatic_uploads: true,
-                    images_upload_handler: handleUploadImg,
+                //     automatic_uploads: true,
+                //     images_upload_handler: handleUploadImg,
 
-                    menubar: true,
-                    tinycomments_mode: 'embedded',
-                    tinycomments_author: 'Author name',
-                    // mergetags_list: [
-                    //   { value: 'First.Name', title: 'First Name' },
-                    //   { value: 'Email', title: 'Email' },
-                    // ],
-                    ai_request: (request: any, respondWith: any) => respondWith.string(() => Promise.reject('See docs to implement AI Assistant')),
+                //     menubar: true,
+                //     tinycomments_mode: 'embedded',
+                //     tinycomments_author: 'Author name',
+                //     // mergetags_list: [
+                //     //   { value: 'First.Name', title: 'First Name' },
+                //     //   { value: 'Email', title: 'Email' },
+                //     // ],
+                //     ai_request: (request: any, respondWith: any) => respondWith.string(() => Promise.reject('See docs to implement AI Assistant')),
+                //   }}
+                //   onInit={(_evt, editor) => {
+                //     editorRef.current = {
+                //       ...editorRef.current,
+                //       [col.name]: editor,
+                //     };
+                //   }}
+                //   initialValue={String(col.value)}
+                // />
+                <FroalaEditorComponent
+                  tag="textarea"
+                  config={{
+                    placeholderText: 'Edit Your Content Here!',
+                    charCounterCount: true,
+                    toolbarButtons: ['bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript', '|', 'fontFamily', 'fontSize', 'color', 'inlineStyle', 'paragraphStyle', '|', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'outdent', 'indent', 'quote', '-', 'insertLink', 'insertImage', 'insertVideo', 'insertFile', 'insertTable', '|', 'emoticons', 'specialCharacters', 'insertHR', 'selectAll', 'clearFormatting', '|', 'print', 'help', 'html', '|', 'undo', 'redo'],
+                    pluginsEnabled: ['align', 'charCounter', 'codeBeautifier', 'codeView', 'colors', 'draggable', 'emoticons', 'entities', 'file', 'fontFamily', 'fontSize', 'fullscreen', 'image', 'imageManager', 'inlineStyle', 'lineBreaker', 'link', 'lists', 'paragraphFormat', 'paragraphStyle', 'quickInsert', 'quote', 'save', 'table', 'url', 'video', 'wordPaste'],
+                    imageUpload: true,
+                    imageUploadMethod: 'POST',
+                    events: {
+                      'image.beforeUpload': function (files: File[]) {
+                        const editor = this as any;
+                        handleImageUpload(files, (url: string) => {
+                          editor.image.insert(url, true, null, editor.image.get(), null);
+                        });
+                        return false; // Stop default upload
+                      },
+                    },
                   }}
-                  onInit={(_evt, editor) => {
-                    editorRef.current = {
-                      ...editorRef.current,
-                      [col.name]: editor,
-                    };
-                  }}
-                  initialValue={String(col.value)}
+                  model={editorContents[col.name]}
+                  onModelChange={(model: any) => handleModelChange(col.name, model)}
                 />
               ) : col.type == 'textarea' ? (
                 <textarea
