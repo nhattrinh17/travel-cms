@@ -47,5 +47,9 @@ body {
 
 .fr-wrapper > div:first-child {
   /* Các kiểu CSS của bạn */
+  /* display: none !important; */
+}
+
+a[href*='froala'] {
   display: none !important;
 }
