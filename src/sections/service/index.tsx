@@ -88,6 +88,15 @@ export function ServiceSection(): JSX.Element {
       ],
     },
     {
+      label: 'Price',
+      name: 'price',
+      readOnly: false,
+      type: 'number',
+      value: serviceBookingById?.price || 0,
+      required: true,
+      canUpdate: true,
+    },
+    {
       label: 'Options for transfer(Separated by "*_*")',
       name: 'options',
       readOnly: false,

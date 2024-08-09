@@ -7,6 +7,7 @@ interface otherServiceBookingCurrentSlice {
     description: string;
     options: string;
     type: number;
+    price: number;
     slug: string;
     createdAt: string;
   }[];

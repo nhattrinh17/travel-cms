@@ -148,6 +148,7 @@ export const useOtherServiceBooking = (limitCustom?: number) => {
           ...i,
           content: i.description,
           description: i.description,
+          price: i.price.toLocaleString(),
           service: i.type == TypeOtherServiceBooking.other ? 'Other Service' : 'Transfer service',
         };
       }) || [],
