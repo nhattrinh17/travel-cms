@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react';
 import { faPlus, faXmark } from '@fortawesome/free-solid-svg-icons';
 import Table from '@/uiCore/Table';
 import { ItemAddOrUpdateDto, PopupEditOrAddV1 } from '@/uiCore';
-import { handleCreateReview, handleUpdateReview, useReview } from '@/utils/handleReview';
+import { handleCreateReview, handleDeleteReview, handleUpdateReview, useReview } from '@/utils/handleReview';
 
 import { useAppDispatch } from '@/lib';
 
@@ -103,11 +103,11 @@ export function ReviewComponent({ onCancel, idCruise, idTour }: { onCancel: () =
             columnNotShow={['slug', 'description', 'createdAt']}
             textColor="black"
             data={data}
-            columnDelete={false}
+            columnDelete={true}
             columnEdit={true}
-            // handleDelete={(id) => {
-            //   handleDeleteBankPayment(idPayment, id, dispatch);
-            // }}
+            handleDelete={(id) => {
+              handleDeleteReview(id, dispatch);
+            }}
             handleEdit={(id) => {
               setIdEdit(id);
             }}

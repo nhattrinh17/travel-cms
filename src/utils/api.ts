@@ -259,3 +259,8 @@ export const updateReview = (id: number, data: any) => {
   const axios = new BaseAxios();
   return axios.patch(`review/${id}`, data);
 };
+
+export const deleteReview = (id: number) => {
+  const axios = new BaseAxios();
+  return axios.delete(`review/${id}`);
+};
