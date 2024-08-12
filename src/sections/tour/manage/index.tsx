@@ -14,7 +14,7 @@ import { faBed, faComment, faGift, faPlus } from '@fortawesome/free-solid-svg-ic
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames/bind';
 import { useState } from 'react';
-import { handleCreateTour, handleUpdateTour, useTour } from '@/utils/handleTour';
+import { handleCreateTour, handleDeleteTour, handleUpdateTour, useTour } from '@/utils/handleTour';
 import Pagination from '@/uiCore/Pagination';
 import { setLimitOrPageTour } from '@/lib/redux/app/tour.slice';
 import { useAppDispatch } from '@/lib';
@@ -211,11 +211,12 @@ export function TourManageSection(): JSX.Element {
             columnNotShow={['slug', 'detail', 'contentBrief', 'images', 'travelerLoves', 'accompaniedServices', 'specialOffers', 'packetTourId', 'type']}
             textColor="black"
             data={data}
-            columnDelete={false}
+            columnDelete={true}
             columnEdit={true}
+            handleDelete={(id) => handleDeleteTour(id, dispatch)}
             moreColumnsOptions={[
               {
-                name: 'serrvice',
+                name: 'service',
                 icon: faUps,
                 handleClick(item) {
                   setIdSelect(item.id);

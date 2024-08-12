@@ -15,7 +15,7 @@ import { upLoadFiles } from '@/share/upLoadFile';
 import { ItemAddOrUpdateDto, PopupEditOrAddV1 } from '@/uiCore';
 import Pagination from '@/uiCore/Pagination';
 import Table from '@/uiCore/Table';
-import { handleCreateCruise, handleUpdateCruise, useCruise } from '@/utils/handleCruise';
+import { handleCreateCruise, handleDeleteCruise, handleUpdateCruise, useCruise } from '@/utils/handleCruise';
 import { useDestination } from '@/utils/handleDestination';
 import { useDetailLocation } from '@/utils/handleDetailLoaction';
 import { faUps } from '@fortawesome/free-brands-svg-icons';
@@ -259,8 +259,9 @@ export function CruiseManageSection(): JSX.Element {
             columnNotShow={['slug', 'linkTripadvisor', 'detailLocations', 'reviewTripadvisor', 'detail', 'destinationId', 'detailLocationId', 'contentBrief', 'images', 'travelerLoves', 'accompaniedServices', 'specialOffers', 'otherServiceBookings', 'timeLaunched']}
             textColor="black"
             data={data}
-            columnDelete={false}
+            columnDelete={true}
             columnEdit={true}
+            handleDelete={(id) => handleDeleteCruise(id, dispatch)}
             moreColumnsOptions={[
               {
                 name: 'service',

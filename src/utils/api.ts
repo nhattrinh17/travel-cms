@@ -134,6 +134,11 @@ export const updateCruise = (id: number, data: any) => {
   return axios.patch(`cruise/${id}`, data);
 };
 
+export const deleteCruise = (id: number) => {
+  const axios = new BaseAxios();
+  return axios.delete(`cruise/${id}`);
+};
+
 export const getAllRoomCruise = (idCruise: number, itinerariesId: number) => {
   const axios = new BaseAxios();
   return axios.get(`cruise/${idCruise}/room?itinerariesId=${itinerariesId}`);
@@ -192,6 +197,11 @@ export const createTour = (data: any) => {
 export const updateTour = (id: number, data: any) => {
   const axios = new BaseAxios();
   return axios.patch(`tour/${id}`, data);
+};
+
+export const deleteTour = (id: number) => {
+  const axios = new BaseAxios();
+  return axios.delete(`tour/${id}`);
 };
 
 export const updateSpecialOfferTour = (data: any) => {

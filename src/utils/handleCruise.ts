@@ -2,7 +2,7 @@ import { useAppDispatch, useAppSelector } from '@/lib';
 import { setLoadingApp } from '@/lib/redux/system/settingSys';
 import { useEffect, useRef, useState } from 'react';
 import moment from 'moment';
-import { createCruise, getAllCruise, getAllItinerariesCruise, getAllRoomCruise, updateCruise } from './api';
+import { createCruise, deleteCruise, getAllCruise, getAllItinerariesCruise, getAllRoomCruise, updateCruise } from './api';
 import { resetDataCruise, setDataCruises } from '@/lib/redux/app/cruise.slice';
 
 export const useCruise = (idDestination: number, idDetailLocation: number) => {
@@ -57,6 +57,15 @@ export const handleCreateCruise = async (data: any, dispatch: any) => {
 
 export const handleUpdateCruise = async (id: number, data: any, dispatch: any) => {
   const req = await updateCruise(id, data);
+  if (req?.data) {
+    dispatch(resetDataCruise());
+  } else {
+    return false;
+  }
+};
+
+export const handleDeleteCruise = async (id: number, dispatch: any) => {
+  const req = await deleteCruise(id);
   if (req?.data) {
     dispatch(resetDataCruise());
   } else {

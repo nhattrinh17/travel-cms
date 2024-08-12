@@ -3,7 +3,7 @@ import { setLoadingApp } from '@/lib/redux/system/settingSys';
 import { useEffect, useRef, useState } from 'react';
 import moment from 'moment';
 import { resetDataTour, setDataTours } from '@/lib/redux/app/tour.slice';
-import { createTour, getAllItinerariesTour, getAllTour, updateTour } from './api';
+import { createTour, getAllItinerariesTour, getAllTour, updateTour, deleteTour } from './api';
 
 export const useTour = (packetTourId: number, type?: number) => {
   const { tours, refreshData, page, limit, total } = useAppSelector((state) => state.tour);
@@ -58,6 +58,15 @@ export const handleCreateTour = async (data: any, dispatch: any) => {
 
 export const handleUpdateTour = async (id: number, data: any, dispatch: any) => {
   const req = await updateTour(id, data);
+  if (req?.data) {
+    dispatch(resetDataTour());
+  } else {
+    return false;
+  }
+};
+
+export const handleDeleteTour = async (id: number, dispatch: any) => {
+  const req = await deleteTour(id);
   if (req?.data) {
     dispatch(resetDataTour());
   } else {
