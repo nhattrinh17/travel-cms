@@ -218,7 +218,7 @@ export function PopupEditOrAddV1({
                     type="file"
                     name={col.name}
                     required={col.required}
-                    multiple
+                    multiple={col.type === 'images'}
                     onChange={async (e) => {
                       if (e.target.files && handleUpLoadFiles) {
                         const urlImage = await handleUpLoadFiles(e.target.files);

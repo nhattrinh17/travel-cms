@@ -274,3 +274,21 @@ export const deleteReview = (id: number) => {
   const axios = new BaseAxios();
   return axios.delete(`review/${id}`);
 };
+
+export const getAllBlogCategories = (page: number, limit: number) => {
+  const axios = new BaseAxios();
+  let url = 'blog-category?';
+  if (page) url += 'page=' + page;
+  if (limit) url += '&limit=' + limit;
+  return axios.get(url);
+};
+
+export const createBlogCategories = (data: any) => {
+  const axios = new BaseAxios();
+  return axios.post('blog-category', data);
+};
+
+export const updateBlogCategory = (id: number, data: any) => {
+  const axios = new BaseAxios();
+  return axios.patch(`blog-category/${id}`, data);
+};

@@ -13,6 +13,7 @@ import otherServiceBookingReduce from './app/otherServiceBooking.slice';
 import bookingCruiseReduce from './app/bookingCruise.slice';
 import bookingTourReduce from './app/bookingTour.slice';
 import reviewReduce from './app/review.slice';
+import blogCategoriesReduce from './app/blogCategories.slice';
 
 export const makeStore = () => {
   return configureStore({
@@ -31,6 +32,7 @@ export const makeStore = () => {
       bookingCruise: bookingCruiseReduce,
       bookingTour: bookingTourReduce,
       review: reviewReduce,
+      blogCategories: blogCategoriesReduce,
     },
   });
 };

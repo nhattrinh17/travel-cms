@@ -11,6 +11,7 @@ import { useAppSelector } from '@/lib';
 
 import { usePathname } from 'next/navigation';
 import { faMap } from '@fortawesome/free-regular-svg-icons';
+import { faBloggerB } from '@fortawesome/free-brands-svg-icons';
 
 const cx = classNames.bind(styles);
 
@@ -57,6 +58,12 @@ export function SideBars(): JSX.Element {
           link: '/admin/tour/booking',
         },
       ],
+    },
+    {
+      title: 'Blog',
+      icon: faBloggerB,
+      link: '/admin/blog',
+      subMenu: [],
     },
   ];
   const currentPage = usePathname();
