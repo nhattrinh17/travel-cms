@@ -14,6 +14,7 @@ import bookingCruiseReduce from './app/bookingCruise.slice';
 import bookingTourReduce from './app/bookingTour.slice';
 import reviewReduce from './app/review.slice';
 import blogCategoriesReduce from './app/blogCategories.slice';
+import blogReduce from './app/blog.slice';
 
 export const makeStore = () => {
   return configureStore({
@@ -33,6 +34,7 @@ export const makeStore = () => {
       bookingTour: bookingTourReduce,
       review: reviewReduce,
       blogCategories: blogCategoriesReduce,
+      blog: blogReduce,
     },
   });
 };

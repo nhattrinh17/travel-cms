@@ -1,11 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-interface BlogCategoriesSlice {
-  blogCategories: {
+interface BlogSlice {
+  blog: {
     id: number;
+    blogCategoryId: string;
     name: string;
     description: string;
     image: string;
+    content: string;
     createdAt: string;
   }[];
   page: number;
@@ -14,41 +16,41 @@ interface BlogCategoriesSlice {
   refreshData: boolean;
 }
 
-const blogCategoriesSlice = createSlice({
-  name: 'blogCategories',
+const blogSlice = createSlice({
+  name: 'blog',
   initialState: {
-    blogCategories: [],
+    blog: [],
     limit: 10,
     page: 1,
     total: 0,
     refreshData: true,
-  } as BlogCategoriesSlice,
+  } as BlogSlice,
   reducers: {
-    setDataBlogCategories: (state, action) => {
-      state.blogCategories = action.payload?.data;
+    setDataBlog: (state, action) => {
+      state.blog = action.payload?.data;
       state.total = action.payload?.total;
       state.page = action.payload.page;
       state.refreshData = false;
     },
-    setLimitOrPageBlogCategories: (state, action: { payload: { limit?: number; page?: number } }) => {
+    setLimitOrPageBlog: (state, action: { payload: { limit?: number; page?: number } }) => {
       state.limit = action.payload.limit ? action.payload.limit : state.limit;
       state.page = action.payload.page ? action.payload.page : state.page;
       state.refreshData = true;
     },
-    resetDataBlogCategories: (state) => {
-      state.blogCategories = [];
+    resetDataBlog: (state) => {
+      state.blog = [];
       state.page = 1;
       state.limit = 10;
       state.total = 0;
       state.refreshData = true;
     },
 
-    refreshDataBlogCategories: (state) => {
+    refreshDataBlog: (state) => {
       state.refreshData = true;
     },
   },
 });
 
-export const { refreshDataBlogCategories, resetDataBlogCategories, setDataBlogCategories, setLimitOrPageBlogCategories } = blogCategoriesSlice.actions;
+export const { refreshDataBlog, resetDataBlog, setDataBlog, setLimitOrPageBlog } = blogSlice.actions;
 
-export default blogCategoriesSlice.reducer;
+export default blogSlice.reducer;

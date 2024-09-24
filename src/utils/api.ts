@@ -292,3 +292,27 @@ export const updateBlogCategory = (id: number, data: any) => {
   const axios = new BaseAxios();
   return axios.patch(`blog-category/${id}`, data);
 };
+
+export const getAllBlog = (page: number, limit: number, blogCategoryId?: number) => {
+  const axios = new BaseAxios();
+  let url = 'blog/cms?';
+  if (page) url += 'page=' + page;
+  if (limit) url += '&limit=' + limit;
+  if (blogCategoryId) url += '&blogCategoryId=' + blogCategoryId;
+  return axios.get(url);
+};
+
+export const createBlog = (data: any) => {
+  const axios = new BaseAxios();
+  return axios.post('blog', data);
+};
+
+export const updateBlog = (id: number, data: any) => {
+  const axios = new BaseAxios();
+  return axios.patch(`blog/${id}`, data);
+};
+
+export const deleteBlog = (id: number) => {
+  const axios = new BaseAxios();
+  return axios.delete(`blog/${id}`);
+};
