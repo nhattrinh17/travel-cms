@@ -91,7 +91,7 @@ export function ManageBlogSections(): JSX.Element {
   ];
 
   return (
-    <main className="relative min-h-full">
+    <main className="relative min-h-full text-black">
       <HeaderContent path="blog" title="Manage Blog" />
       <div className="p-3 ">
         <div className="">

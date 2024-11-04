@@ -44,7 +44,7 @@ export default function MainLayout({
         <div className="flex-1">
           <Header />
           <Suspense>
-            <div className="relative w-full h-full">
+            <div className="relative w-full h-full bg-white">
               <LoadingModal />
               {children}
             </div>

@@ -69,7 +69,7 @@ export function ItinerariesCruiseAndTour({
   ];
 
   return (
-    <div className="absolute top-0 left-0 bottom-0 right-0 bg-[#dadae178] flex justify-center items-center">
+    <div className="text-black absolute top-0 left-0 bottom-0 right-0 bg-[#dadae178] flex justify-center items-center">
       <div className="bg-white p-4 rounded-md relative w-[75%]">
         <div className="">
           <h3>Update Itineraries</h3>

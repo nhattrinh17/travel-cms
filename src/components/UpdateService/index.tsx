@@ -29,7 +29,7 @@ export function UpdateServiceCruiseAndTour({
   const dispatch = useAppDispatch();
 
   return (
-    <div className="absolute top-0 left-0 bottom-0 right-0 bg-[#dadae178] flex justify-center items-center">
+    <div className="text-black absolute top-0 left-0 bottom-0 right-0 bg-[#dadae178] flex justify-center items-center">
       <div className="bg-white p-4 rounded-md relative ">
         <div
           className={classNames({

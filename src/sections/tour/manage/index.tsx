@@ -182,9 +182,9 @@ export function TourManageSection(): JSX.Element {
           {showPacketTour ? <PacketTourComponent onCancel={() => setShowPacketTour(false)} /> : <></>}
         </div>
         <div className="my-3">
-          <h3 className="font-medium text-base">Filter Tour</h3>
+          <h3 className="font-medium text-base text-black">Filter Tour</h3>
 
-          <div className="flex items-center mt-2">
+          <div className="flex items-center mt-2 text-black">
             <select defaultValue={idPacketTour} onChange={(e) => setIdPacketTour(+e.target.value)} className="mr-5 outline-none border-[1px] rounded-2xl py-2 px-3">
               <option>--Select PacketTour--</option>
               {dataPacketTour.map((d, index) => (

@@ -78,8 +78,9 @@ export const useRoomCruise = (idCruise: number, itinerariesId: number, refreshDa
     {
       id: number;
       name: string;
-      price: number;
-      priceDetail: string;
+      priceSingle: number;
+      priceDouble: number;
+      // priceDetail: string;
       totalRooms: number;
       typeBed: number;
       isViewOcean: string;
@@ -113,6 +114,8 @@ export const useRoomCruise = (idCruise: number, itinerariesId: number, refreshDa
     return {
       ...i,
       viewOcean: i.isViewOcean ? 'Yes' : 'No',
+      priceDouble: i?.priceDouble?.toString(),
+      priceSingle: i?.priceSingle?.toString(),
     };
   });
 };

@@ -225,11 +225,11 @@ export function CruiseManageSection(): JSX.Element {
           {showDetailLocation ? <DetailLocationComponent onCancel={() => setShowDetailLocation(false)} /> : <></>}
         </div>
         <div className="my-3">
-          <h3 className="font-medium text-base">Filter Cruise</h3>
+          <h3 className="font-medium text-base text-black">Filter Cruise</h3>
           {/* <p className="text-red-500 mt-1">
             Please selected <span className="underline">Destination</span> and <span className="underline">Detail Destination</span> before add cruise
           </p> */}
-          <div className="flex items-center mt-2">
+          <div className="flex items-center mt-2 text-black">
             <select defaultValue={idDestination} onChange={(e) => setIdDestination(+e.target.value)} className="mr-5 outline-none border-[1px] rounded-2xl py-2 px-3">
               <option>--Select Destination--</option>
               {dataDestination.map((d, index) => (
