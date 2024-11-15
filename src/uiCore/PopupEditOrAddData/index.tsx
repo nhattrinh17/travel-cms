@@ -201,9 +201,9 @@ export function PopupEditOrAddV1({
             if (item.canUpdate) {
               if (item.type !== 'editor') dataSend[item.name] = item.value;
               // for Froala
-              else dataSend[item.name] = dataSend[item.name] = editorContents[item.name];
+              // else dataSend[item.name] = dataSend[item.name] = editorContents[item.name];
               // for Editor tiny cloud
-              // else dataSend[item.name] = editorRef.current[item.name].getContent();
+              else dataSend[item.name] = editorRef.current[item.name].getContent();
             }
           });
           if (id) {
@@ -280,98 +280,98 @@ export function PopupEditOrAddV1({
                   </div>
                 </div>
               ) : col.type == 'editor' ? (
-                <FroalaEditorComponent
-                  tag="textarea"
-                  config={{
-                    placeholderText: 'Edit Your Content Here!',
-                    charCounterCount: true,
-                    toolbarButtons: [
-                      //
-                      'bold',
-                      'italic',
-                      'underline',
-                      'strikeThrough',
-                      'subscript',
-                      'superscript',
-                      '|',
-                      'fontFamily',
-                      'fontSize',
-                      'color',
-                      'inlineStyle',
-                      'paragraphStyle',
-                      '|',
-                      'paragraphFormat',
-                      'align',
-                      'formatOL',
-                      'formatUL',
-                      'outdent',
-                      'indent',
-                      'quote',
-                      '-',
-                      'insertLink',
-                      'insertImage',
-                      // 'insertVideo',
-                      // 'insertFile',
-                      'insertTable',
-                      '|',
-                      'emoticons',
-                      'specialCharacters',
-                      'insertHR',
-                      'selectAll',
-                      'clearFormatting',
-                      '|',
-                      'print',
-                      'help',
-                      'html',
-                      '|',
-                      'undo',
-                      'redo',
-                    ],
-                    pluginsEnabled: ['align', 'charCounter', 'codeBeautifier', 'codeView', 'colors', 'draggable', 'emoticons', 'entities', 'file', 'fontFamily', 'fontSize', 'fullscreen', 'image', 'imageManager', 'inlineStyle', 'lineBreaker', 'link', 'lists', 'paragraphFormat', 'paragraphStyle', 'quickInsert', 'quote', 'save', 'table', 'url', 'video', 'wordPaste'],
-                    imageUpload: true,
-                    imageUploadMethod: 'POST',
-                    events: {
-                      'image.beforeUpload': function (files: File[]) {
-                        const editor = this as any;
-                        handleImageUpload(files, (url: string) => {
-                          editor.image.insert(url, true, null, editor.image.get(), null);
-                        });
-                        return false; // Stop default upload
-                      },
-                    },
+                // <FroalaEditorComponent
+                //   tag="textarea"
+                //   config={{
+                //     placeholderText: 'Edit Your Content Here!',
+                //     charCounterCount: true,
+                //     toolbarButtons: [
+                //       //
+                //       'bold',
+                //       'italic',
+                //       'underline',
+                //       'strikeThrough',
+                //       'subscript',
+                //       'superscript',
+                //       '|',
+                //       'fontFamily',
+                //       'fontSize',
+                //       'color',
+                //       'inlineStyle',
+                //       'paragraphStyle',
+                //       '|',
+                //       'paragraphFormat',
+                //       'align',
+                //       'formatOL',
+                //       'formatUL',
+                //       'outdent',
+                //       'indent',
+                //       'quote',
+                //       '-',
+                //       'insertLink',
+                //       'insertImage',
+                //       // 'insertVideo',
+                //       // 'insertFile',
+                //       'insertTable',
+                //       '|',
+                //       'emoticons',
+                //       'specialCharacters',
+                //       'insertHR',
+                //       'selectAll',
+                //       'clearFormatting',
+                //       '|',
+                //       'print',
+                //       'help',
+                //       'html',
+                //       '|',
+                //       'undo',
+                //       'redo',
+                //     ],
+                //     pluginsEnabled: ['align', 'charCounter', 'codeBeautifier', 'codeView', 'colors', 'draggable', 'emoticons', 'entities', 'file', 'fontFamily', 'fontSize', 'fullscreen', 'image', 'imageManager', 'inlineStyle', 'lineBreaker', 'link', 'lists', 'paragraphFormat', 'paragraphStyle', 'quickInsert', 'quote', 'save', 'table', 'url', 'video', 'wordPaste'],
+                //     imageUpload: true,
+                //     imageUploadMethod: 'POST',
+                //     events: {
+                //       'image.beforeUpload': function (files: File[]) {
+                //         const editor = this as any;
+                //         handleImageUpload(files, (url: string) => {
+                //           editor.image.insert(url, true, null, editor.image.get(), null);
+                //         });
+                //         return false; // Stop default upload
+                //       },
+                //     },
+                //   }}
+                //   model={editorContents[col.name]}
+                //   onModelChange={(model: any) => handleModelChangeFroalaEditor(col.name, model)}
+                // />
+                <Editor
+                  apiKey="luqq3j7fb1fwxw205pen9j2yi2uw2mldo3lwmkb6j4r8w0yt"
+                  init={{
+                    plugins: ['advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview', 'anchor', 'searchreplace', 'visualblocks', 'fullscreen', 'insertdatetime', 'media', 'table', 'help', 'wordcount'],
+                    // plugins: ['a11ychecker', 'advlist', 'advcode', 'advtable', 'autolink', 'checklist', 'export', 'lists', 'link', 'image', 'charmap', 'preview', 'anchor', 'searchreplace', 'visualblocks', 'powerpaste', 'fullscreen', 'formatpainter', 'insertdatetime', 'media', 'table', 'help', 'wordcount'],
+                    toolbar: 'undo redo | casechange blocks | bold italic backcolor | ' + 'alignleft aligncenter alignright alignjustify | ' + 'bullist numlist checklist outdent indent | removeformat | a11ycheck code table help',
+                    images_file_types: 'jpeg,jpg,jpe,jfi,jif,jfif,png,gif,bmp,webp',
+
+                    automatic_uploads: true,
+                    images_upload_handler: handleUploadImg,
+
+                    menubar: true,
+                    tinycomments_mode: 'embedded',
+                    tinycomments_author: 'Author name',
+                    // mergetags_list: [
+                    //   { value: 'First.Name', title: 'First Name' },
+                    //   { value: 'Email', title: 'Email' },
+                    // ],
+                    ai_request: (request: any, respondWith: any) => respondWith.string(() => Promise.reject('See docs to implement AI Assistant')),
                   }}
-                  model={editorContents[col.name]}
-                  onModelChange={(model: any) => handleModelChangeFroalaEditor(col.name, model)}
+                  onInit={(_evt, editor) => {
+                    editorRef.current = {
+                      ...editorRef.current,
+                      [col.name]: editor,
+                    };
+                  }}
+                  initialValue={String(col.value)}
                 />
-              ) : // <Editor
-              //   apiKey="luqq3j7fb1fwxw205pen9j2yi2uw2mldo3lwmkb6j4r8w0yt"
-              //   init={{
-              //     plugins: ['advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview', 'anchor', 'searchreplace', 'visualblocks', 'fullscreen', 'insertdatetime', 'media', 'table', 'help', 'wordcount'],
-              //     // plugins: ['a11ychecker', 'advlist', 'advcode', 'advtable', 'autolink', 'checklist', 'export', 'lists', 'link', 'image', 'charmap', 'preview', 'anchor', 'searchreplace', 'visualblocks', 'powerpaste', 'fullscreen', 'formatpainter', 'insertdatetime', 'media', 'table', 'help', 'wordcount'],
-              //     toolbar: 'undo redo | casechange blocks | bold italic backcolor | ' + 'alignleft aligncenter alignright alignjustify | ' + 'bullist numlist checklist outdent indent | removeformat | a11ycheck code table help',
-              //     images_file_types: 'jpeg,jpg,jpe,jfi,jif,jfif,png,gif,bmp,webp',
-
-              //     automatic_uploads: true,
-              //     images_upload_handler: handleUploadImg,
-
-              //     menubar: true,
-              //     tinycomments_mode: 'embedded',
-              //     tinycomments_author: 'Author name',
-              //     // mergetags_list: [
-              //     //   { value: 'First.Name', title: 'First Name' },
-              //     //   { value: 'Email', title: 'Email' },
-              //     // ],
-              //     ai_request: (request: any, respondWith: any) => respondWith.string(() => Promise.reject('See docs to implement AI Assistant')),
-              //   }}
-              //   onInit={(_evt, editor) => {
-              //     editorRef.current = {
-              //       ...editorRef.current,
-              //       [col.name]: editor,
-              //     };
-              //   }}
-              //   initialValue={String(col.value)}
-              // />
-              col.type == 'textarea' ? (
+              ) : col.type == 'textarea' ? (
                 <textarea
                   value={col.value ?? ''}
                   name={col.name}
